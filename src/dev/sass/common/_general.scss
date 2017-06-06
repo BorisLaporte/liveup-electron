@@ -1,0 +1,25 @@
+body{
+	font-size: 16px;
+	font-weight: normal;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#container{
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100%;
+	min-width: 100%;
+}
+
+div, a{
+	box-sizing: border-box;
+}
+
+.over-hidden{
+	overflow: hidden;
+}

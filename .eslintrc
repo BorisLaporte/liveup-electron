@@ -1,0 +1,32 @@
+{
+  "extends": ["airbnb-base","eslint:recommended", "plugin:react/recommended", "plugin:import/errors", "plugin:import/warnings"],
+  "parser": "babel-eslint",
+  "settings":{
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.dev.js"
+      }
+    } 
+  },
+  "rules": {
+    "comma-dangle": 0,
+    "no-console": 0,
+    "semi": [2, "never"],
+    "func-names": 0,
+    "space-before-function-paren": 0,
+    "no-multi-spaces": 0,
+    "babel/generator-star-spacing": 1,
+    "babel/new-cap": 1,
+    "babel/object-shorthand": 1,
+    "babel/arrow-parens": 1,
+    "babel/no-await-in-loop": 1
+  },
+  "plugins": [
+    "babel",
+    "react",
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+  }
+}
