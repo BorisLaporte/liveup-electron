@@ -52,11 +52,12 @@ button{
   }
 }
 
-input, textarea, select {
+input[type="text"], input[type="password"], input[type="file"], input[type="submit"], textarea, select {
   
   -webkit-appearance:none;
   -moz-appearance:none;
   appearance:none;
+  border: 0;
   &:focus, &:active{
     outline: 0
   }

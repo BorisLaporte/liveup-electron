@@ -9,15 +9,20 @@ import {loginUser} from 'STORE/actions/connection'
 
 class Login extends Component {
 
-  handleClick(e) {
+  onSubmit(e) {
     const {dispatch} = this.props
     const {email, password} = this.refs
+
+    e.preventDefault()
+
     const creds = { 
       email: email.value.trim(),
       password: password.value.trim()
     }
-
-    dispatch(loginUser(creds))
+    if (creds.email && creds.password){
+      dispatch(loginUser(creds))
+    }
+    return false
   }
 
   componentWillMount() {
@@ -33,7 +38,7 @@ class Login extends Component {
           <span >Bienvenue sur Liveup</span>
         </div>
         <div className="bloc">
-          <div className="form">
+          <form className="form" onSubmit={(e) => {this.onSubmit(e)}}>
             <div className="fields">
               <div className="label-input">
                 <label htmlFor="email">
@@ -64,16 +69,15 @@ class Login extends Component {
             </div> 
             <div className="bottom-part">
               <div className="checkbox">
-                <input type="checkbox" name="remember" id="remember"/> 
+                <input type="checkbox" name="remember" id="remember" defaultChecked/> 
                 <label htmlFor="remember" className="inline">
                   Rester connectée
                 </label>
               </div>
-              <button className="button-round" onClick={(event) => this.handleClick(event)}>
-                Se connecter
-              </button>
+              <input type="submit" className="button-round" value="Se connecter">
+              </input>
             </div>     
-          </div>
+          </form>
           <div className="seperator"></div>
           <div className="links">
             <span>Vous n'avez pas de compte ? </span><Link to="/signup">S'inscrire</Link>

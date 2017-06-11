@@ -12,11 +12,14 @@ class Auth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log("UPDATE")
     this.redirectOnLogin()
   }
 
   redirectOnLogin(){
     const {isAuthenticated, router} = this.props
+    console.log("REDIRECT LOGIN")
+    console.log(isAuthenticated)
     if (isAuthenticated) {
       router.push('/dashboard')
     }

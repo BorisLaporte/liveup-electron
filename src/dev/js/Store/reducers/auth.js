@@ -2,6 +2,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
   LOGOUT_SUCCESS,
   LOST_SESSION
 } from 'STORE/type_actions'
@@ -25,6 +28,21 @@ export default function authReducer(state = {
         isAuthenticated: true
       })
     case LOGIN_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false
+      })
+    case SIGNUP_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false
+      })
+    case SIGNUP_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: true
+      })
+    case SIGNUP_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false
