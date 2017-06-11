@@ -1,0 +1,67 @@
+@import '~SASS/variables';
+
+#login{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1180px;
+  padding: 0 50px;
+
+  .title {
+    font-size: 5.3em; 
+    line-height: 1.28;
+    font-weight: 800;
+    color: $white;
+    width: 50%;
+    flex-shrink: 0;
+    padding-bottom: 100px;
+    user-select: none;
+
+    .wrap{
+      white-space: wrap;
+      display: block;
+    }
+    .no-wrap{
+      white-space: nowrap;
+      display: block;
+    }
+
+    @media screen and (max-width: 970px){
+      font-size: 3.5em;
+      width: 30%;
+    }
+  }
+  .bloc {
+    width: 50%;
+    flex-grow: 1;
+    max-width: 400px;
+    float: right;
+  }
+  .bottom-part{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 55px;
+  }
+  label{
+    color: $white;
+  }
+  .seperator{
+    background-color: $white;
+    height: 1px;
+    width: 80%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .links{
+    padding: 20px 0;
+    text-align: center;
+    color: $white;
+
+    a{
+      font-weight: 800;
+    }
+  }
+}

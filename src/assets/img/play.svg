@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="23px" viewBox="0 0 16 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="39 404 39 424.930233 52.926499 414.465116"></polygon>
+    </defs>
+    <g id="UI_App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="03-After_Live" transform="translate(-506.000000, -518.000000)">
+            <g id="Group-4" transform="translate(0.000000, -1.000000)">
+                <g id="stream" transform="translate(468.000000, 116.000000)">
+                    <g id="Fill-2">
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <path stroke="#FFFFFF" stroke-width="1" d="M38.5,402.998837 L53.7588011,414.465116 L38.5,425.931396 L38.5,402.998837 Z"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

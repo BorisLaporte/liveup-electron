@@ -43,3 +43,21 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
+button{
+  border: 0;
+
+  &:focus, &:active{
+    outline: 0
+  }
+}
+
+input, textarea, select {
+  
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  &:focus, &:active{
+    outline: 0
+  }
+}

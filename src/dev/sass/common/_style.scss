@@ -1,0 +1,70 @@
+.form {
+
+  input[type="text"], input[type="password"], input[type="file"], textarea, select {
+    padding: 15px;
+    border: solid 1px $blue;
+    font-family: $simplon;
+    width: 100%;
+    border-radius: 3px;
+    font-size: 0.875em;
+
+    &::placeholder {
+      color: $light-grey;
+      font-size: 0.875em;
+    }
+
+    &:focus {
+      border: solid 1px $purple;
+    }
+  }
+  select{
+    font-family: $simplon;
+    background-color: $white;
+    background-image: url('~IMG/arrow.svg');
+    background-repeat: no-repeat;
+    background-position: 97% center;
+  }
+  .fields{
+    margin-bottom: 40px;
+  }
+  .label-input{
+    margin-bottom: 30px;
+
+    &.no-margin{
+      margin-bottom: 0px;
+    }
+  }
+  label{
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    margin-bottom: 8px;
+    user-select: none; 
+
+    &.inline{
+      margin-left: 5px;
+      margin-bottom: 0px;
+      vertical-align: middle;
+    }
+    .bold{
+      font-weight: 800;
+    }
+  }
+  button{
+    cursor: pointer;
+    font-family: $simplon;
+  }
+  .button-round{
+    position: relative;
+    display: inline-block;
+    padding: 12px 45px;
+    background-color: $white;
+    border-radius: 3px;
+    font-size: 0.875em;
+  }
+  .checkbox{
+    display: inline-block;
+  }
+}
+
+

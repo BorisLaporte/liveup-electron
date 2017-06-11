@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="8px" viewBox="0 0 13 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="UI_App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01-Live" transform="translate(-958.000000, -358.000000)" fill="#3B5AFF">
+            <g id="catégories" transform="translate(446.000000, 312.000000)">
+                <polygon id="Shape" transform="translate(518.270700, 49.785156) rotate(-180.000000) translate(-518.270700, -49.785156) " points="518.2707 46 517.470835 46.7423084 512 51.8464492 513.599731 53.5703125 518.2707 49.2146247 522.941669 53.5703125 524.5414 51.8464492 519.070565 46.7423084"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,23 +1,62 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Login from './Login'
-import {Link} from 'react-router'
+import {connect} from 'react-redux'
+import {Link, withRouter} from 'react-router'
+
+import './auth.scss'
 
 class Auth extends Component {
 
+  componentWillMount() {
+    this.redirectOnLogin()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.redirectOnLogin()
+  }
+
+  redirectOnLogin(){
+    const {isAuthenticated, router} = this.props
+    if (isAuthenticated) {
+      router.push('/dashboard')
+    }
+  }
+
   render() {
-    console.log(this.props)
-    const {children} = this.props
+    const {dispatch, children} = this.props
+
+    const childrenWithProps = React.Children.map(children,
+     (child) => React.cloneElement(child, {
+       dispatch
+     })
+    )
+
     return (
-      <div id="Auth" className="container">
-        {children}
+      <div id="Auth" className="fullscreen">
+        <div className="background-img fullscreen"></div>
+        {childrenWithProps}
       </div>
     )
   }
 }
 
 Auth.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
-export default Auth
+function mapStateToProps(state) {
+  
+  const {authReducer} = state
+
+  const {
+    isAuthenticated
+  } = authReducer
+  
+  return {
+    isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(Auth))

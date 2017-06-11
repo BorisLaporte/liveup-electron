@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="35px" viewBox="0 0 35 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Path 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="35" height="35"></rect>
+    </defs>
+    <g id="UI_App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02-Live_info" transform="translate(-1007.000000, -272.000000)">
+            <g id="tchat" transform="translate(984.000000, 115.000000)">
+                <g id="interaction_streamer" transform="translate(0.000000, 82.000000)">
+                    <g id="Path-3" transform="translate(23.000000, 75.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+                        <polygon fill="#3B5AFF" mask="url(#mask-2)" points="45.5 0.5 -1 26 -1 -6.51538098"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

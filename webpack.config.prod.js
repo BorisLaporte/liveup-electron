@@ -51,7 +51,8 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       debug: false
     }),
-    new CompressionPlugin()
+    new CompressionPlugin(),
+    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
   ],
   module: {
     loaders: [

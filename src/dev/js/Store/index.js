@@ -1,20 +1,19 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import responsiveReducer from './responsive/reducers'
+import getReducers from './reducers'
 
-const theStore = combineReducers({
-  responsiveReducer
-})
 
 const loggerMiddleware = createLogger()
+const reducers = getReducers()
 
 export default function configureStore() {
   return createStore(
-    theStore,
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware(
       thunkMiddleware,
-      loggerMiddleware
+      loggerMiddleware,
     )
   )
 }

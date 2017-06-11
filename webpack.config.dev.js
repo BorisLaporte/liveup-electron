@@ -49,6 +49,7 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       debug: true
     })
+    // new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
   ],
 
   module: {

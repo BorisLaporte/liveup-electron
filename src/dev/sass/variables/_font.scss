@@ -1,10 +1,37 @@
-// @font-face {
-//   font-family: "Mohave-BoldItalic";
-//   src: url('../../assets/font/Mohave-BoldItalic.eot'); /* IE9+ Compat Modes */
-//   src: url('../../assets/font/Mohave-BoldItalic.woff2') format('woff2'), /* Super modern browsers */
-//        url('../../assets/font/Mohave-BoldItalic.woff') format('woff'), /* Modern browsers */
-//        url('../../assets/font/Mohave-BoldItalic.ttf')  format('truetype'), /* Safari, Android, iOS */
-//        url('../../assets/font/Mohave-BoldItalic.otf')  format('OpenType'), /* Something */
-// }
+@font-face {
+  font-family: "simplon";
+  src: url('~FONT/SimplonBPRegular.eot'); /* IE9+ Compat Modes */
+  src: url('~FONT/SimplonBPRegular.woff2') format('woff2'), /* Super modern browsers */
+       url('~FONT/SimplonBPRegular.woff') format('woff'), /* Modern browsers */
+       url('~FONT/SimplonBPRegular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('~FONT/SimplonBPRegular.otf')  format('OpenType'); /* Something */
 
-// $mohave: 'Mohave-BoldItalic';
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "simplon";
+  src: url('~FONT/SimplonBP-Medium.eot'); /* IE9+ Compat Modes */
+  src: url('~FONT/SimplonBP-Medium.woff2') format('woff2'), /* Super modern browsers */
+       url('~FONT/SimplonBP-Medium.woff') format('woff'), /* Modern browsers */
+       url('~FONT/SimplonBP-Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('~FONT/SimplonBP-Medium.otf')  format('OpenType'); /* Something */
+
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "simplon";
+  src: url('~FONT/SimplonBP-Bold.eot'); /* IE9+ Compat Modes */
+  src: url('~FONT/SimplonBP-Bold.woff2') format('woff2'), /* Super modern browsers */
+       url('~FONT/SimplonBP-Bold.woff') format('woff'), /* Modern browsers */
+       url('~FONT/SimplonBP-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('~FONT/SimplonBP-Bold.otf')  format('OpenType'); /* Something */
+
+  font-weight: 800;
+  font-style: normal;
+}
+
+$simplon: 'simplon';
