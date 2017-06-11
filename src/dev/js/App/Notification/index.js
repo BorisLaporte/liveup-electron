@@ -1,20 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import OneNotif from './OneNotif'
+import './notifications.scss'
+
 class Notification extends React.Component {
   render() {
-    // const {notifications} = this.props
-    const notifications = []
+    const {notif, id, dispatch} = this.props
     return (
-      <div id="notifications" className="fullscreen">
-        <h1>notifications</h1>
+      <div id="notifications">
         {
-          notifications.map(
-            notif => <li key={notif.id}>{notif.content}</li>,
+          notif.map(
+            _notif => 
+           <OneNotif notif={_notif} dispatch={dispatch} key={_notif.id}/>
           )
         }
       </div>
     )
   }
 }
-export default Notification
+
+function mapStateToProps(state) {
+
+  const {notificationsReducer} = state
+
+  const {
+    notif,
+    id
+  } = notificationsReducer
+  
+  return {
+    notif,
+    id
+  }
+}
+
+export default connect(mapStateToProps)(Notification)

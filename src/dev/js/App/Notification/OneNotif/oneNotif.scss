@@ -1,0 +1,43 @@
+@import '~SASS/variables';
+
+.one-notif{
+  border-radius: 3px;
+  display: flex;
+  margin: 20px 30px;
+  position: relative;
+
+  &.error{
+    background-color: $red-error;
+  }
+  &.success{
+    background-color: $green-success;
+  }
+  .text{
+    max-width: 320px;
+    width: 100%;
+    flex-shrink: 1;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    color: $white;
+    font-size: 1em;
+    padding: 20px 17px;
+  }
+  .close{
+    width: 55px;
+    flex-shrink: 0;
+    position: relative;
+    display: inline-block;
+    border-left: 1px solid $white;
+    cursor: pointer;
+
+    img{
+      height: 16px;
+      width: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

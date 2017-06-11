@@ -6,6 +6,7 @@ import './login.scss'
 // import 'IMG/iconesbg.svg'
 
 import {loginUser} from 'STORE/actions/connection'
+import {addError, TN} from 'STORE/actions/notification'
 
 class Login extends Component {
 
@@ -21,6 +22,8 @@ class Login extends Component {
     }
     if (creds.email && creds.password){
       dispatch(loginUser(creds))
+    } else {
+      dispatch(addError(TN.MISSING_FIELDS, "Veuillez remplir tous les champs"))
     }
     return false
   }

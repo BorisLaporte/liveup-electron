@@ -46,8 +46,8 @@ class App extends Component {
     } = this.props
     return (
       <div className="wrapper">
-        <Notification />
         {children}
+        <Notification />
       </div>
     )
   }

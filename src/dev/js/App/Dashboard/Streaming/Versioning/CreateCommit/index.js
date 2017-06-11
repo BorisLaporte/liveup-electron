@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router'
-import * as moment from 'moment'
+import moment from 'moment'
 
 import {commitFile} from 'STORE/actions/versioning'
 import addImg from 'IMG/add.svg'
@@ -41,15 +41,22 @@ class CreateCommit extends Component {
     return false
   }
 
-  // getDiffTime(time){
-  //   const diff = moment.diff
-  //   const forHuman = moment.duration(time, "minutes").humanize(true)
-  //   console.log(forHuman)
-  // }
+  getHumanDate(time){
+    const now = moment()
+    const fileTime = moment(time)
+    console.log(now)
+    console.log(fileTime)
+    const diff = fileTime.diff(now)
+    console.log(diff)
+    const finalTime = moment.duration(diff).humanize(true)
+    console.log(finalTime)
+    return finalTime
+  }
 
 
   render() {
     const {filesCommited, isFetching} = this.props
+    const {getHumanDate} = this
     return (
       <div id="createCommit">
         <div className="form-container">
@@ -84,7 +91,7 @@ class CreateCommit extends Component {
                     </div>
                     <div className="text-content">
                       <div className="message">{value.commit_message}</div>
-                      <div className="date">{value.created_at}</div>
+                      <div className="date">{getHumanDate(value.created_at)}</div>
                     </div>
                   </div>
                 )
