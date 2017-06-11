@@ -3,10 +3,13 @@
 
 ##DEV
 
+```
 npm install
 npm run dev
-when building finished ( only watching ) on an other terminal
-npm run electron
+on an other terminal : 
+  npm run electron
+
+```
 
 ##PROD
 
