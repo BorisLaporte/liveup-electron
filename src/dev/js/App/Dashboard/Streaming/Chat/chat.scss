@@ -87,18 +87,25 @@
           position: relative;
           display: inline-block;
           cursor: pointer;
+          color: $black;
 
+          &:hover{
+            .text{
+              color: $blue;
+            }
+          }
           .text{
             font-size: 0.875em;
             font-weight: 800;
-            color: $black;
             padding: 20px 10px;
             position: relative;
             display: inline-block;
+            transition: color 0.2s ease-in-out;
           }
-
           &.active{
-            color: $blue;
+            .text{
+              color: $blue;
+            }
 
             .indicator{
               opacity: 1;
