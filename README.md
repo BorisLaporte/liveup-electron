@@ -1,7 +1,7 @@
 # Liveup's App in electron for streamers
 
 
-##DEV
+## DEV
 
 ```
 npm install
@@ -11,6 +11,6 @@ on an other terminal :
 
 ```
 
-##PROD
+## PROD
 
 yet to be done
