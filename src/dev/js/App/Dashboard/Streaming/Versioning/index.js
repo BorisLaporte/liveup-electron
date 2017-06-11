@@ -12,13 +12,10 @@ class Versioning extends Component {
 
   render() {
     const {isFetching, isInitiated} = this.props
-    console.log("VERSIONNNIIIING !!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    console.log(isFetching)
-    console.log(isInitiated)
     return (
       <div id="versioning">
         {
-          isFetching ?
+          (isFetching && !isInitiated) ?
           <div>LOADING</div>
           :
           <div>

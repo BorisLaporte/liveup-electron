@@ -9,6 +9,7 @@ import EndStreaming from './EndStreaming'
 import Live from './Live'
 import Stats from './Stats'
 import Versioning from './Versioning'
+import Chat from './Chat'
 import Navbar from '../Navbar'
 
 import stopStreamImg from 'IMG/stopstream.svg'
@@ -46,7 +47,6 @@ class Streaming extends Component {
     return (
       <div id="streaming" className="flex-column-screen fullscreen container">
         <Navbar dispatch={dispatch} button={button}/>
-        STREAMING
         {
           (Object.keys(stream).length > 0)
           &&
@@ -59,6 +59,7 @@ class Streaming extends Component {
               <Stats stream={stream} />
             </div>
             <div className="right-part">
+              <Chat />
             </div>
           </div>
         }

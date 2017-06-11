@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router'
 
 // import {} from 'STORE/actions/stream'
+import './live.scss'
 
 class Live extends Component {
 
@@ -11,12 +12,10 @@ class Live extends Component {
   render() {
     const {channel} = this.props
     return (
-      <div id="Live">
+      <div id="live" className="iframe-container">
         <iframe
-          title="iframe-stream"
+          title="stream"
           src={"http://player.twitch.tv/?channel="+channel}
-          height="500"
-          width="700"
           frameBorder="0"
           scrolling="no"
           allowFullScreen="true"

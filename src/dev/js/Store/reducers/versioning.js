@@ -43,7 +43,8 @@ export default function versioningReducer(state = {
       })
     case DROPBOX_REQUEST:
       return Object.assign({}, state, {
-        isFetchingDropbox: true
+        isFetchingDropbox: true,
+        isFetching: true
       })
     case DROPBOX_SUCCESS:
       return Object.assign({}, state, {

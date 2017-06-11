@@ -49,24 +49,31 @@ class CreateCommit extends Component {
 
 
   render() {
-    const {filesCommited} = this.props
+    const {filesCommited, isFetching} = this.props
     return (
       <div id="createCommit">
-        <form className="form add-commit" onSubmit={this.onSubmit}>
-          <div className="btn-plus">
-            <img src={addImg} alt="add"/>
-            <input type="submit" value=""></input>
-          </div>
-          <input
-            type="text"
-            ref="commit"
-            id="commit"
-            name="commit"
-            className="commit-field"
-            required
-            placeholder="Ajouter un instant clé"
-          />
-        </form>
+        <div className="form-container">
+          {
+            isFetching ?
+            <div>LOADING</div>
+            :
+            <form className="form add-commit" onSubmit={this.onSubmit}>
+              <div className="btn-plus">
+                <img src={addImg} alt="add"/>
+                <input type="submit" value=""></input>
+              </div>
+              <input
+                type="text"
+                ref="commit"
+                id="commit"
+                name="commit"
+                className="commit-field"
+                required
+                placeholder="Ajouter un instant clé"
+              />
+            </form>
+          }
+        </div>
         <div className="list-commit">
           {
             filesCommited.map(function(value, key){
@@ -101,6 +108,7 @@ function mapStateToProps(state) {
     stream_file_id,
     filesCommited,
     isInitiated,
+    isFetching,
     file
   } = versioningReducer
 
@@ -113,6 +121,7 @@ function mapStateToProps(state) {
     stream_file_id,
     filesCommited,
     isInitiated,
+    isFetching,
     file,
     stream
   }

@@ -1,0 +1,53 @@
+@import '~SASS/variables';
+
+#stats{
+  
+  &.stats-container{
+    position: relative;
+    display: flex;
+    height: 200px;
+
+
+    .viewers{
+      position: relative;
+      width: 220px;
+      flex-shrink: 0;
+      background-color: $white;
+      margin-right: 12px;
+      height: 100%;
+      overflow: hidden;
+
+      img{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -20%;
+      }
+      .title{
+        font-size: 0.875em;
+        font-weight: 600;
+        color: $black;
+        text-align: center;
+        width: 100%;
+        padding-top: 15px;
+      }
+      .number{
+        color: $blue;
+        font-weight: 800;
+        font-size: 3em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .evolution{
+      overflow: hidden;
+      width: 100%;
+      flex-shrink: 1;
+      background-color: $white;
+      height: 100%;
+
+    }
+  }
+}
