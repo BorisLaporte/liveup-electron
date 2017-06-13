@@ -12,8 +12,8 @@ class Notification extends React.Component {
       <div id="notifications">
         {
           notif.map(
-            _notif => 
-           <OneNotif notif={_notif} dispatch={dispatch} key={_notif.id}/>
+            (_notif, key) => 
+           <OneNotif notif={_notif} dispatch={dispatch} key={_notif.id} theKey={key}/>
           )
         }
       </div>

@@ -32,7 +32,6 @@ class Login extends Component {
 
   componentWillMount() {
     const {dispatch} = this.props
-    dispatch(addError(TN.MISSING_FIELDS, "Veuillez remplir tous les champs"))
   }
 
   componentDidUpdate(prevProps, prevState) {

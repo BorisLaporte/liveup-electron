@@ -2,6 +2,9 @@ import {
   CREATE_STREAM_REQUEST,
   CREATE_STREAM_SUCCESS,
   CREATE_STREAM_FAILURE,
+  GET_INFO_STREAM_REQUEST,
+  GET_INFO_STREAM_SUCCESS,
+  GET_INFO_STREAM_FAILURE,
   END_STREAM_REQUEST,
   END_STREAM_SUCCESS,
   UPLOAD_STREAM_REQUEST,
@@ -31,6 +34,20 @@ export default function streamReducer(state = {
         stream: action.stream
       })
     case CREATE_STREAM_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        status: null
+      })
+    case GET_INFO_STREAM_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case GET_INFO_STREAM_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        stream: action.stream
+      })
+    case GET_INFO_STREAM_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         status: null

@@ -208,9 +208,13 @@ function uploadDropbox(file, version, successCallback){
                 dispatch(dropboxSuccess(content))
                 dispatch(successCallback())
               }
-            }).catch(err => dispatch(addError(TN.DROPBOX_FAILURE, "Une érreur s'est produite avec l'upload")))
+            }).catch(err =>{
+              dispatch(dropboxFailure())
+              dispatch(addError(TN.DROPBOX_FAILURE, "Une érreur s'est produite avec l'upload"))
+            })
 
       } else {
+        dispatch(dropboxFailure())
         dispatch(addError(TN.READFILE_FAILURE, "Une érreur s'est produite avec le fichier"))
       }
     })
@@ -234,7 +238,10 @@ function initApiCall(file, config){
           localStorage.setItem('liveup_file_id', content.id)
           dispatch(initSuccess(content))
         }
-      }).catch(err => dispatch(addError(TN.INIT_FILE_FAILURE, "Une érreur s'est produite")))
+      }).catch(err => {
+        dispatch(initFailure())
+        dispatch(addError(TN.INIT_FILE_FAILURE, "Une érreur s'est produite"))
+      })
   }
 }
 
@@ -285,11 +292,15 @@ function commitCall(config) {
             ).then(({ content, response }) =>  {
         if (!response.ok) {
           dispatch(sendVersionFailure())
+          dispatch(addError(TN.COMMIT_ERROR, "Une érreur s'est produite"))
           return Promise.reject(content)
         } else {
           dispatch(sendVersionSuccess(content))
         }
-      }).catch(err => dispatch(sendVersionFailure()))
+      }).catch(err => {
+        dispatch(sendVersionFailure())
+        dispatch(addError(TN.COMMIT_ERROR, "Une érreur s'est produite"))
+      })
   }
 }
 
@@ -351,7 +362,9 @@ export function getInfoCommit(stream_id){
           dispatch(getFileInfoFromLocalStorage())
           dispatch(receiveCommitInfo(content.commits, version, isInitiated))
         }
-      }).catch(err => dispatch(receiveCommitInfo([], false)))
+      }).catch(err => {
+        dispatch(receiveCommitInfo([], false))
+      })
   }
 }
 

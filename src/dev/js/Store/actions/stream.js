@@ -2,6 +2,9 @@ import {
   CREATE_STREAM_REQUEST,
   CREATE_STREAM_SUCCESS,
   CREATE_STREAM_FAILURE,
+  GET_INFO_STREAM_REQUEST,
+  GET_INFO_STREAM_SUCCESS,
+  GET_INFO_STREAM_FAILURE,
   END_STREAM_REQUEST,
   END_STREAM_SUCCESS,
   END_STREAM_FAILURE,
@@ -33,6 +36,25 @@ function receiveStream(stream) {
 function streamError() {
   return {
     type: CREATE_STREAM_FAILURE
+  }
+}
+
+function getInfoStreamRequest() {
+  return {
+    type: GET_INFO_STREAM_REQUEST
+  }
+}
+
+function receiveInfoStream(stream) {
+  return {
+    type: GET_INFO_STREAM_SUCCESS,
+    stream: stream
+  }
+}
+
+function streamInfoError() {
+  return {
+    type: GET_INFO_STREAM_FAILURE
   }
 }
 
@@ -137,6 +159,7 @@ export function getStreamInfo(channel, getCommit = false) {
 
   return dispatch => {
 
+    dispatch(getInfoStreamRequest())
     return fetch(URL_API + '/api/v1/streams/' + channel, config)
       .then(response =>
         response.json().then(content => ({ content, response }))
@@ -145,18 +168,15 @@ export function getStreamInfo(channel, getCommit = false) {
         if (!response.ok || content.id == null) {
           localStorage.removeItem('liveup_stream_id')
           localStorage.removeItem('liveup_stream_status')
-          dispatch(streamError())
+          dispatch( receiveInfoStream() ) 
           dispatch(addError(TN.CREATE_STREAM_FAILURE, "Une érreur s'est produite"))
           return Promise.reject(content)
         } else {
-          // If login was successful, set the token in local storage
-          localStorage.setItem('liveup_stream_id', content.id)
-          localStorage.setItem('liveup_stream_status', STATUS.STREAMING)
           if (getCommit){
             dispatch(getInfoCommit(content.id))
           }
           // Dispatch the success action
-          dispatch(receiveStream(content))
+          dispatch(receiveInfoStream(content))
         }
       }).catch(err => dispatch(addError(TN.CREATE_STREAM_FAILURE, "Une érreur s'est produite")))
   }

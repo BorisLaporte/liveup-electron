@@ -13,7 +13,8 @@ class OneNotif extends React.Component {
     super(props)
 
     this.state = {
-      timeout: null
+      timeout: null,
+      readyForTransition: false
     }
   }
 
@@ -45,8 +46,8 @@ class OneNotif extends React.Component {
   }
 
   leavingAnim(callback){
-    const {main} = this.refs
-    TweenLite.to(main, 0.4,
+    const {container} = this.refs
+    TweenLite.to(container, 0.4,
     {
       opacity: 0,
       y: -10,
@@ -55,8 +56,8 @@ class OneNotif extends React.Component {
   }
 
   enteringAnim(){
-    const {main} = this.refs
-    TweenLite.from(main, 0.4,
+    const {container} = this.refs
+    TweenLite.from(container, 0.4,
     {
       opacity: 0,
       y: 10
@@ -64,7 +65,7 @@ class OneNotif extends React.Component {
   }
 
   componentWillMount() {
-    // this.autoClose()
+    this.autoClose()
   }
 
   componentDidMount() {
@@ -78,13 +79,29 @@ class OneNotif extends React.Component {
     }
   }
 
+  getStyle(){
+    const {theKey} = this.props
+    const value = 'calc(' + (theKey * 100) + '%' + ' + ' + (theKey * 20) + 'px)'
+    return {
+      transform: 'translateY('+ value +')'
+    }
+  }
+
   render() {
     const {message, kind} = this.props.notif
+    const {theKey} = this.props
+    const {readyForTransition} = this.state
     return (
-      <div className={"one-notif " + kind} ref="main">
-        <div className="text">{message}</div>
-        <div className="close" onClick={(e) => this.handleClick(e)}>
-          <img src={closeImg} alt="close"/>
+      <div 
+        className={"one-notif " + kind}
+        ref="main"
+        style={this.getStyle()}
+      >
+        <div className="one-notif-container" ref="container">
+          <div className="text">{message}</div>
+          <div className="close" onClick={(e) => this.handleClick(e)}>
+            <img src={closeImg} alt="close"/>
+          </div>
         </div>
       </div>
     )

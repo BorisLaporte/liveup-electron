@@ -1,0 +1,17 @@
+@import '~SASS/variables';
+
+
+.vod{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  background-color: $white;
+
+  img{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+}
