@@ -5,7 +5,6 @@ import {Link, withRouter} from 'react-router'
 
 import {getStreamInfo, endStream} from 'STORE/actions/stream'
 
-import EndStreaming from './EndStreaming'
 import Live from './Live'
 import Stats from './Stats'
 import Versioning from './Versioning'
