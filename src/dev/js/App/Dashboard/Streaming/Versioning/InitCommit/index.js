@@ -11,6 +11,7 @@ class InitCommit extends Component {
   handleClick(file) {
     const {dispatch, stream} = this.props
     if (file){
+      console.log("START INIT")
       dispatch(initFile(stream.id, file))
     } else {
       // error

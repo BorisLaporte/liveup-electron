@@ -1,6 +1,7 @@
 node_modules
 build/*
 !build/.htaccess
+!build/eletron-main.js
 .DS_STORE
 *.log
 *.protected.js

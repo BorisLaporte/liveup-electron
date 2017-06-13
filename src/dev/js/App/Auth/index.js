@@ -12,25 +12,36 @@ class Auth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("UPDATE")
-    this.redirectOnLogin()
+    const {isAuthenticated, channel} = this.props
+    if (prevProps.isAuthenticated != isAuthenticated || prevProps.channel != channel) {
+      this.redirectOnLogin()
+    }
   }
 
   redirectOnLogin(){
-    const {isAuthenticated, router} = this.props
-    console.log("REDIRECT LOGIN")
-    console.log(isAuthenticated)
-    if (isAuthenticated) {
-      router.push('/dashboard')
+    const {isAuthenticated, router, channel} = this.props
+    if (isAuthenticated && channel) {
+      if (router.location.path != '/dashboard'){
+        router.push('/dashboard')
+      }
+    } else if (isAuthenticated && !channel){
+      if (router.location.path != '/become-streamer'){
+        router.push('/become-streamer') 
+      }
+    } else if (!isAuthenticated){
+      if (router.location.path != '/'){
+        router.push('/') 
+      }
     }
   }
 
   render() {
-    const {dispatch, children} = this.props
+    const {dispatch, isAuthenticated, children} = this.props
 
     const childrenWithProps = React.Children.map(children,
      (child) => React.cloneElement(child, {
-       dispatch
+       dispatch,
+       isAuthenticated
      })
     )
 
@@ -51,14 +62,17 @@ Auth.propTypes = {
 
 function mapStateToProps(state) {
   
-  const {authReducer} = state
+  const {authReducer, userReducer} = state
 
   const {
     isAuthenticated
   } = authReducer
+
+  const {channel} = userReducer
   
   return {
-    isAuthenticated
+    isAuthenticated,
+    channel
   }
 }
 

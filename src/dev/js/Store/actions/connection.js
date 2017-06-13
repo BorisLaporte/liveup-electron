@@ -5,6 +5,9 @@ import {
   requestSignup,
   receiveSignup,
   signupError,
+  requestBecomeStreamer,
+  receiveBecomeStreamer,
+  becomeStreamerError,
   requestLogout,
   receiveLogout,
   lostSession
@@ -12,8 +15,13 @@ import {
 
 import {
   fillUser,
-  emptyUser
+  emptyUser,
+  fillChannel
 } from './user'
+
+import {CLEAN_STORE} from '../type_actions'
+
+import {addError, addSuccess, TN} from './notification'
 
 import {URL_API} from './var'
 
@@ -43,6 +51,7 @@ export function loginUser(creds) {
           // If there was a problem, we want to
           // dispatch the error condition
           dispatch(loginError(user.message))
+          dispatch(addError(TN.LOGIN_FAILED, "Votre identifiant ou mot de passe est incorrect"))
           return Promise.reject(user)
         } else {
           // If login was successful, set the token in local storage
@@ -52,7 +61,7 @@ export function loginUser(creds) {
           dispatch(fillUser(user))
           dispatch(receiveLogin(user))
         }
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => dispatch(addError(TN.LOGIN_FAILED, "Votre identifiant ou mot de passe est incorrect")))
   }
 }
 
@@ -76,6 +85,7 @@ export function signupUser(creds) {
           // If there was a problem, we want to
           // dispatch the error condition
           dispatch(signupError())
+          dispatch(addError(TN.SIGNUP_FAILED, "Une érreur s'est produite"))
           return Promise.reject(user)
         } else {
           // If login was successful, set the token in local storage
@@ -84,39 +94,60 @@ export function signupUser(creds) {
           // Dispatch the success action
           dispatch(fillUser(user))
           dispatch(receiveSignup())
+          dispatch(addSuccess(TN.SIGNUP_SUCCESS, "Votre compte vient d'être créer"))
         }
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => dispatch(addError(TN.SIGNUP_FAILED, "Une érreur s'est produite")))
+  }
+}
+
+export function clearEverything(){
+  return dispatch => {
+    localStorage.clear()
+    dispatch({type: CLEAN_STORE})
+
   }
 }
 
 // Logs the user out
 export function logoutUser() {
 
-  const token = localStorage.getItem('liveup_authentication_token')
-  const email = localStorage.getItem('liveup_email')
+  
 
-  const config = {
-    method: 'DELETE',
-    headers: { 
-      'X-User-Email': email,
-      'X-User-Token': token
-    }
-  }
 
   return dispatch => {
+
+    // const token = localStorage.getItem('liveup_authentication_token')
+    // const email = localStorage.getItem('liveup_email')
+
+    // const config = {
+    //   method: 'DELETE',
+    //   headers: { 
+    //     'X-User-Email': email,
+    //     'X-User-Token': token
+    //   }
+    // }
+
+    // if (!email || !token){
+    //   return false
+    // }
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogout())
-    dispatch(endStream())
-    dispatch(endWatching())
-    dispatch(emptyUser())
     dispatch(receiveLogout())
-    localStorage.removeItem('liveup_authentication_token')
-    localStorage.removeItem('liveup_email')
 
-    return fetch(URL_API + '/api/v1/sessions', config)
-      .then(response => {
-        console.log(response)
-      }).catch(err => console.log("Error: ", err))
+    // return fetch(URL_API + '/api/v1/sessions', config)
+    //   .then(response => {
+    //     console.log(response)
+    //     dispatch(receiveLogout())
+    //   }).catch(err => console.log("Error: ", err))
+
+    dispatch(clearEverything())
+  }
+}
+
+export function didLostSession(){
+  return dispatch => {
+    dispatch(clearEverything())
+    dispatch(addError(TN.LOST_SESSION, "Votre session a expirée"))
   }
 }
 
@@ -140,25 +171,22 @@ export function getCredsFromLocalStorage(){
 }
 
 export function checkIfConnected() {
-  const token = localStorage.getItem('liveup_authentication_token')
-  const email = localStorage.getItem('liveup_email')
-
-  if (!token || !email){
-    console.log("not connected")
-    return false
-  }
-
-  const config = {
-    method: 'GET',
-    headers: { 
-      'X-User-Email': email,
-      'X-User-Token': token
-    }
-  }
 
   return dispatch => {
-    // We dispatch requestLogin to kickoff the call to the API
-    // dispatch(checkingUser())
+    const token = localStorage.getItem('liveup_authentication_token')
+    const email = localStorage.getItem('liveup_email')
+
+    if (!token || !email){
+      return false
+    }
+
+    const config = {
+      method: 'GET',
+      headers: { 
+        'X-User-Email': email,
+        'X-User-Token': token
+      }
+    }
 
     return fetch(URL_API + '/api/v1/users', config)
       .then(response =>
@@ -168,7 +196,54 @@ export function checkIfConnected() {
           //ERRROR
         }
         dispatch(fillUser(user))
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => {
+        dispatch(clearEverything())
+        dispatch(addError(TN.SIGNUP_FAILED, "Votre session a expirée"))
+      })
+  }
+}
+
+export function becomeStreamer(channel){
+  return dispatch => {
+    const token = localStorage.getItem('liveup_authentication_token')
+    const email = localStorage.getItem('liveup_email')
+
+    if (!token || !email){
+      return false
+    }
+
+    const config = {
+      method: 'PUT',
+      headers: { 
+        'X-User-Email': email,
+        'X-User-Token': token,
+        'Content-Type': "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        user: {
+          channel: channel
+        }
+      })
+    }
+
+    console.log(config)
+    dispatch(requestBecomeStreamer())
+    return fetch(URL_API + '/api/v1/users', config)
+      .then(response =>
+        response.json().then(user => ({ user, response }))
+            ).then(({ user, response }) =>  {
+        if (!response.ok){
+          dispatch(addError(TN.SIGNUP_FAILED, "Ce channel n'est pas valide"))
+        }
+        dispatch(fillChannel(user.channel))
+        console.log("SUPER USER")
+        console.log(user)
+        dispatch(receiveBecomeStreamer(user.channel))
+        dispatch(addSuccess(TN.BECOME_STREAMER_SUCCESS, "Félicitation ! Vous êtes désormais un streamer"))
+      }).catch(err => {
+        dispatch(becomeStreamerError())
+        dispatch(addError(TN.SIGNUP_FAILED, "Ce channel est déjà pris"))
+      })
   }
 }
 

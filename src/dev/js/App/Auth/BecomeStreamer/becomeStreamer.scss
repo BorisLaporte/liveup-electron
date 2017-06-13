@@ -1,22 +1,16 @@
 @import '~SASS/variables';
 
-#signup{
+#become-streamer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+  max-width: 1180px;
+  padding: 0 50px;
   position: relative;
-  overflow-y: scroll;
-
-  .container-main{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1180px;
-    padding: 0 50px;
-    position: relative;
-  }
 
   .title {
-    font-size: 5.3em; 
+    font-size: 3.4em; 
     line-height: 1.28;
     font-weight: 800;
     color: $white;
@@ -24,12 +18,6 @@
     flex-shrink: 0;
     padding-bottom: 100px;
     user-select: none;
-    position: fixed;
-
-    &.shadow{
-      position: relative;
-      opacity: 0;
-    }
 
     .wrap{
       white-space: wrap;
@@ -41,46 +29,26 @@
     }
 
     @media screen and (max-width: 970px){
-      font-size: 3.5em;
+      font-size: 2em;
       width: 30%;
     }
   }
-  .bloc-container{
+  .bloc {
     width: 50%;
     flex-grow: 1;
     max-width: 400px;
-    height: 100%;
-    position: relative;
     float: right;
-  }
-  .bloc {
-    position: relative;
-    padding: 150px 0;
   }
   .bottom-part{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-direction: row-reverse;
     margin-bottom: 55px;
+
   }
   label{
     color: $white;
-  }
-  .line{
-    display: flex;
-    position: relative;
-  }
-  .label-input{
-
-    &.half{
-
-    }
-    &.left{
-      margin-right: 15px;
-    }
-    &.right{
-      margin-left: 15px;
-    }
   }
   .seperator{
     background-color: $white;

@@ -6,7 +6,7 @@ import './chat.scss'
 
 class Chat extends Component {
   render() {
-    const {live, pseudo} = this.props
+    const {pseudo} = this.props
     return (
       <div id="chat" className="chat-container">
         <div className="detail-user">
@@ -14,22 +14,12 @@ class Chat extends Component {
             <div className="pseudo">
               {pseudo}
             </div>
-            {
-              live ?
-              <div className="status online">
-                <div className="bubble"></div>
-                <div className="status-human">
-                  online
-                </div>
+            <div className="status online">
+              <div className="bubble"></div>
+              <div className="status-human">
+                online
               </div>
-              :
-              <div className="status offline">
-                <div className="bubble"></div>
-                <div className="status-human">
-                  offline
-                </div>
-              </div>
-            }
+            </div>
           </div>
         </div>
         <div className="conversation-container">
@@ -252,14 +242,12 @@ function mapStateToProps(state) {
   const {userReducer} = state
 
   const {
-    pseudo,
-    live
+    pseudo
   } = userReducer
 
   
   return {
-    pseudo,
-    live
+    pseudo
   }
 }
 

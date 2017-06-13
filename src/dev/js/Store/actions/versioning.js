@@ -11,17 +11,21 @@ import {
   INIT_FAILURE,
   SEND_VERSION_REQUEST,
   SEND_VERSION_SUCCESS,
-  SEND_VERSION_FAILURE
+  SEND_VERSION_FAILURE,
+  COMMIT_INFO_REQUEST,
+  COMMIT_INFO_SUCCESS,
+  COMMIT_INFO_FAILURE,
+  GET_FILE_ID
 } from '../type_actions'
 
 import {URL_API, URL_DROPBOX} from './var'
-
 import {DROPBOX_API_KEY} from './keys.protected'
-
-import {logoutUser} from './connection'
+import {didLostSession} from './connection'
+import {addError, TN} from './notification'
 
 const electron = window.require('electron')
 const fs = electron.remote.require('fs')
+const AdmZip = electron.remote.require('adm-zip')
 
 function selectFile(file) {
   return {
@@ -119,21 +123,65 @@ function sendVersionFailure() {
   }
 }
 
+function requestCommitInfo(){
+  return {
+    type: COMMIT_INFO_REQUEST
+  }
+}
+
+function receiveCommitInfo(commits, version, isInitiated){
+  return {
+    type: COMMIT_INFO_SUCCESS,
+    version: version,
+    commits: commits,
+    isInitiated: isInitiated
+  }
+}
+
+function commitInfoFailure(){
+  return {
+    type: COMMIT_INFO_FAILURE
+  }
+}
+
+function getFileId(id){
+  return {
+    type: GET_FILE_ID,
+    stream_file_id: id
+  }
+}
+
 function getFileInfo(file, stream_id){
   const format = file.name.substring(file.name.lastIndexOf('.') + 1, file.name.lenght)
   const name = file.name.substring(0, file.name.lastIndexOf('.'))
 
-  return {
+  const fileInfo = {
     stream_id: stream_id,
     path: file.path,
     format: format,
     name: name
   }
+
+  localStorage.setItem('liveup_file', JSON.stringify(fileInfo))
+
+  return fileInfo
+}
+
+function getFileInfoFromLocalStorage(){
+  return dispatch => {
+    const fileInfo = JSON.parse(localStorage.getItem('liveup_file'))
+    const stream_file_id = localStorage.getItem('liveup_file_id')
+    dispatch(getFileId(stream_file_id))
+    dispatch(selectFile(fileInfo))
+  }
 }
 
 function uploadDropbox(file, version, successCallback){
   const {stream_id, format, name, path} = file
-  console.log("DORPBOX !!!!!!!")
+  // const zip = new AdmZip()
+  // zip.addLocalFile(path)
+  // const SUPER_DATA = zip.toBuffer()
+  // console.log(SUPER_DATA)
   return dispatch => {
     return fs.readFile(path, (err, data) => {
       if (!err) {
@@ -153,16 +201,17 @@ function uploadDropbox(file, version, successCallback){
                   ).then(({ content, response }) =>  {
               if (!response.ok) {
                 dispatch(dropboxFailure())
+                dispatch(addError(TN.DROPBOX_FAILURE, "Une érreur s'est produite avec l'upload"))
                 // errorCallback()
                 return Promise.reject(content)
               } else {
                 dispatch(dropboxSuccess(content))
                 dispatch(successCallback())
               }
-            }).catch(err => console.log("Error: ", err))
+            }).catch(err => dispatch(addError(TN.DROPBOX_FAILURE, "Une érreur s'est produite avec l'upload")))
 
       } else {
-        console.log(err)
+        dispatch(addError(TN.READFILE_FAILURE, "Une érreur s'est produite avec le fichier"))
       }
     })
   }
@@ -179,43 +228,47 @@ function initApiCall(file, config){
             ).then(({ content, response }) =>  {
         if (!response.ok) {
           dispatch(initFailure())
+          dispatch(addError(TN.INIT_FILE_FAILURE, "Une érreur s'est produite"))
           return Promise.reject(content)
         } else {
+          localStorage.setItem('liveup_file_id', content.id)
           dispatch(initSuccess(content))
         }
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => dispatch(addError(TN.INIT_FILE_FAILURE, "Une érreur s'est produite")))
   }
 }
 
 export function initFile(stream_id, file) {
+  return dispatch => {
+    const token = localStorage.getItem('liveup_authentication_token')
+    const email = localStorage.getItem('liveup_email')
 
-  console.log("INIT FILE !!!!!!!!!!!!!!!")
+    const fileInfo = getFileInfo(file, stream_id)
+    const {format, name} = fileInfo
 
-  const token = localStorage.getItem('liveup_authentication_token')
-  const email = localStorage.getItem('liveup_email')
+    if (!token || !email){
+      dispatch(didLostSession())
+      return false
+    }
 
-  const fileInfo = getFileInfo(file, stream_id)
-  const {format, name} = fileInfo
-
-  const config_api = {
-    method: 'POST',
-    headers: { 
-      'Content-Type':'application/json; charset=utf-8',
-      'X-User-Email': email,
-      'X-User-Token': token
-    },
-    body: JSON.stringify({
-      file: {
-        name: name,
-        stream_id: stream_id, 
-        format: format
-      }
-    })
+    const config_api = {
+      method: 'POST',
+      headers: { 
+        'Content-Type':'application/json; charset=utf-8',
+        'X-User-Email': email,
+        'X-User-Token': token
+      },
+      body: JSON.stringify({
+        file: {
+          name: name,
+          stream_id: stream_id, 
+          format: format
+        }
+      })
+    }
+    const initApiCallRef = initApiCall.bind(null, fileInfo, config_api)
+    dispatch(uploadDropbox(fileInfo, 0, initApiCallRef))
   }
-
-  const initApiCallRef = initApiCall.bind(null, fileInfo, config_api)
-  return uploadDropbox(fileInfo, 0, initApiCallRef)
-
 }
 
 function commitCall(config) {
@@ -236,34 +289,76 @@ function commitCall(config) {
         } else {
           dispatch(sendVersionSuccess(content))
         }
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => dispatch(sendVersionFailure()))
   }
 }
 
 
 export function commitFile(file, version, stream_file_id, commit_message) {
 
-  const token = localStorage.getItem('liveup_authentication_token')
-  const email = localStorage.getItem('liveup_email')
+  return dispatch => {
 
-  const next_version = version + 1
+    const token = localStorage.getItem('liveup_authentication_token')
+    const email = localStorage.getItem('liveup_email')
 
-  const config = {
-    method: 'POST',
-    headers: { 
-      'Content-Type':'application/json; charset=utf-8',
-      'X-User-Email': email,
-      'X-User-Token': token
-    },
-    body: JSON.stringify({
-      file: {
-        stream_file_id: stream_file_id,
-        commit_message: commit_message
-      }
-    })
+    if (!token || !email){
+      dispatch(didLostSession())
+      return false
+    }
+    
+    const next_version = version + 1
+
+    const config = {
+      method: 'POST',
+      headers: { 
+        'Content-Type':'application/json; charset=utf-8',
+        'X-User-Email': email,
+        'X-User-Token': token
+      },
+      body: JSON.stringify({
+        file: {
+          stream_file_id: stream_file_id,
+          commit_message: commit_message
+        }
+      })
+    }
+    const commitCallRef = commitCall.bind(null, config)
+    dispatch(uploadDropbox(file, next_version, commitCallRef))
   }
-  const commitCallRef = commitCall.bind(null, config)
-  return uploadDropbox(file, next_version, commitCallRef)
 }
 
+export function getInfoCommit(stream_id){
+  return dispatch => {
+    const config = {
+      method: 'GET'
+    }
 
+    dispatch(requestCommitInfo())
+    return fetch(URL_API + '/api/v1/files/commit/index/' + stream_id, config)
+      .then(response =>
+        response.json().then(content => ({ content, response }))
+            ).then(({ content, response }) =>  {
+        if (!response.ok) {
+          dispatch(commitInfoFailure())
+          return Promise.reject(content)
+        } else {
+          let isInitiated = false
+          let version = 0
+          if (content.commits.length > 0){
+            isInitiated = true
+            version = content.commits.length - 1
+          }
+          dispatch(getFileInfoFromLocalStorage())
+          dispatch(receiveCommitInfo(content.commits, version, isInitiated))
+        }
+      }).catch(err => dispatch(receiveCommitInfo([], false)))
+  }
+}
+
+export function cleanVersioning(){
+  return dispatch => {
+    localStorage.removeItem('liveup_file')
+    localStorage.removeItem('liveup_file_id')
+    dispatch(endWatching())
+  }
+}

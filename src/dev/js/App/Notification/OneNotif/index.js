@@ -4,8 +4,9 @@ import {Power2, TweenLite} from 'gsap'
 
 import {deactivateNotif, deleteNotif, TN, ERROR, SUCCESS} from 'STORE/actions/notification'
 
-import closeImg from 'IMG/close.svg'
 import './oneNotif.scss'
+
+const closeImg = require('IMG/close.svg')
 
 class OneNotif extends React.Component {
   constructor(props){
@@ -63,7 +64,7 @@ class OneNotif extends React.Component {
   }
 
   componentWillMount() {
-    this.autoClose()
+    // this.autoClose()
   }
 
   componentDidMount() {

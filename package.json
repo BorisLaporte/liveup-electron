@@ -7,6 +7,7 @@
     "build": "webpack --config webpack.config.prod.js",
     "dev": "webpack-dev-server --hot --progress --config webpack.config.dev.js",
     "electron-dev": "ELECTRON_START_URL=http://localhost:8080 electron .",
+    "electron-build": "electron build/electron-main.js",
     "lint": "eslint src"
   },
   "repository": {
@@ -33,6 +34,8 @@
     "babel-preset-react": "^6.23.0",
     "compression-webpack-plugin": "^0.3.2",
     "css-loader": "^0.23.1",
+    "electron": "^1.6.2",
+    "electron-packager": "^8.7.1",
     "eslint": "^3.16.1",
     "eslint-config-airbnb-base": "^11.1.1",
     "eslint-import-resolver-webpack": "^0.8.1",
@@ -49,10 +52,11 @@
     "sass-loader": "^6.0.0",
     "style-loader": "^0.13.1",
     "webpack-bundle-tracker": "^0.2.0",
-    "webpack-dev-server": "^2.4.1",
-    "electron": "^1.6.2"
+    "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
+    "adm-zip": "^0.4.7",
+    "adm-zip-electron": "^0.4.7",
     "babel-polyfill": "^6.23.0",
     "es6-promise": "^4.0.5",
     "gsap": "^1.19.1",

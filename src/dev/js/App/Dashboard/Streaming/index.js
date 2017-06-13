@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router'
 
-import {getStreamInfo} from 'STORE/actions/stream'
+import {getStreamInfo, endStream} from 'STORE/actions/stream'
 
 import EndStreaming from './EndStreaming'
 import Live from './Live'
@@ -11,6 +11,8 @@ import Stats from './Stats'
 import Versioning from './Versioning'
 import Chat from './Chat'
 import Navbar from '../Navbar'
+import {STATUS} from 'STORE/reducers/stream'
+import {getInfoCommit} from 'STORE/reducers/versioning'
 
 import stopStreamImg from 'IMG/stopstream.svg'
 import './streaming.scss'
@@ -18,10 +20,16 @@ import './streaming.scss'
 class Streaming extends Component {
 
   componentWillMount() {
-    const {isStreaming, channel, dispatch, stream} = this.props
+    const {status, channel, dispatch, stream, filesCommited} = this.props
     // this.redirectOnStoped()
-    if (isStreaming && Object.keys(stream).length == 0 ){
-      dispatch(getStreamInfo(channel))
+    if (status == STATUS.STREAMING ){
+      if (Object.keys(stream).length == 0){
+        const isMissingCommit = (Object.keys(filesCommited).length < 1)
+        dispatch(getStreamInfo(channel, isMissingCommit))
+      }
+      // if (Object.keys(filesCommited).length == 0){
+      //   dispatch(getInfoCommit())
+      // }
     }
   }
 
@@ -30,8 +38,8 @@ class Streaming extends Component {
   }
 
   redirectOnStoped() {
-    const {isStreaming, router} = this.props
-    if (!isStreaming) {
+    const {status, router} = this.props
+    if (status != STATUS.STREAMING) {
       router.push('/dashboard')
     }
   }
@@ -42,7 +50,7 @@ class Streaming extends Component {
       text: "Arrêtez le stream",
       color: "red",
       img: stopStreamImg,
-      callback: (e) => {console.log(e); console.log("STOP IT")}
+      callback: (e) => {dispatch(endStream(stream.id))}
     }
     return (
       <div id="streaming" className="flex-column-screen fullscreen container">
@@ -73,7 +81,7 @@ Streaming.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const {userReducer, streamReducer} = state
+  const {userReducer, streamReducer, versioningReducer} = state
 
   const {
     id: user_id,
@@ -81,15 +89,20 @@ function mapStateToProps(state) {
   } = userReducer
 
   const {
-    isStreaming,
+    filesCommited
+  } = versioningReducer
+
+  const {
+    status,
     stream
   } = streamReducer
   
   return {
     user_id,
-    isStreaming,
+    status,
     stream,
-    channel
+    channel,
+    filesCommited
   }
 }
 

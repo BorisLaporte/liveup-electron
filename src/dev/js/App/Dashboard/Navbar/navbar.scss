@@ -4,6 +4,7 @@
   height: 65px;
   position: relative;
   width: 100%;
+  flex-shrink: 0;
   background-color: $white;
   display: flex;
   justify-content: space-between;

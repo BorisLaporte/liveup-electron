@@ -12,7 +12,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 1300, height: 700})
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
-    pathname: 'BUILD/index.html',
+    pathname: path.join(__dirname, './index.html'),
     protocol: 'file:',
     slashes: true
   })
@@ -20,7 +20,9 @@ function createWindow () {
   mainWindow.loadURL(startUrl)
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // if (process.env.NODE_ENV == JSON.stringify("production")){
+    mainWindow.webContents.openDevTools()
+  // }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

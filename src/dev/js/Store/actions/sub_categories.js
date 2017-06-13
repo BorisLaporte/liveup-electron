@@ -4,6 +4,8 @@ import {
   SUB_CATEGORIES_FAILURE
 } from 'STORE/type_actions'
 
+import {addError, TN} from './notification'
+
 import {URL_API} from './var'
 
 function requestSubCategories() {
@@ -45,9 +47,10 @@ export function getSubCategories() {
         if (!response.ok){
           //ERRROR
           dispatch(subCategoriesError())
+          dispatch(addError(TN.SUB_CAT_FAILURE, "Une érreur s'est produite"))
           return Promise.reject(subCategories)
         }
         dispatch(receiveSubCategories(subCategories))
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => dispatch(addError(TN.SUB_CAT_FAILURE, "Une érreur s'est produite")))
   }
 }

@@ -15,7 +15,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, './build'),
     filename: '[name]-[hash].js',
-    publicPath: './'
+    publicPath: path.join(__dirname, './build/')
   },
 
   resolve: {
@@ -28,7 +28,7 @@ module.exports = {
       'SASS': path.resolve(__dirname, 'src/dev/sass'),
       'STORE': path.resolve(__dirname, 'src/dev/js/Store'),
       'APP': path.resolve(__dirname, 'src/dev/js/App')
-    }
+    },
   },
 
 
@@ -52,7 +52,7 @@ module.exports = {
       debug: false
     }),
     new CompressionPlugin(),
-    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
+    // new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
   ],
   module: {
     loaders: [

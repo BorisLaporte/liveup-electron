@@ -7,6 +7,9 @@ import {
   SIGNUP_FAILURE,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
+  BECOME_STREAMER_REQUEST,
+  BECOME_STREAMER_SUCCESS,
+  BECOME_STREAMER_FAILURE,
   LOST_SESSION
 } from 'STORE/type_actions'
 
@@ -58,6 +61,27 @@ export function signupError() {
     type: SIGNUP_FAILURE,
     isFetching: false,
     isAuthenticated: false
+  }
+}
+
+export function requestBecomeStreamer() {
+  return {
+    type: BECOME_STREAMER_REQUEST,
+    isFetching: true
+  }
+}
+
+export function receiveBecomeStreamer() {
+  return {
+    type: BECOME_STREAMER_SUCCESS,
+    isFetching: false
+  }
+}
+
+export function becomeStreamerError() {
+  return {
+    type: BECOME_STREAMER_FAILURE,
+    isFetching: false
   }
 }
 

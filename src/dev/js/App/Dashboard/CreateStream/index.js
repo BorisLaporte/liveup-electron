@@ -51,17 +51,17 @@ class CreateStream extends Component {
 
   componentWillMount() {
     const {dispatch} = this.props
-    this.redirectOnStreaming()
+    // this.redirectOnStreaming()
     dispatch(getSubCategories())
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.redirectOnStreaming()
+    // this.redirectOnStreaming()
   }
 
   redirectOnStreaming() {
-    const {isStreaming, router} = this.props
-    if (isStreaming) {
+    const {status, router} = this.props
+    if (status != null) {
       router.push('/dashboard/streaming')
     }
   }
@@ -139,7 +139,6 @@ CreateStream.propTypes = {
 
 
 function mapStateToProps(state) {
-  console.log(state)
   const {userReducer, streamReducer, subCategoriesReducer} = state
 
   const {
@@ -149,13 +148,13 @@ function mapStateToProps(state) {
   const {sub_categories} = subCategoriesReducer
 
   const {
-    isStreaming
+    status
   } = streamReducer
   
   return {
     user_id,
     sub_categories,
-    isStreaming
+    status
   }
 }
 

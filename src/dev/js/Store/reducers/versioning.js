@@ -11,10 +11,14 @@ import {
   INIT_FAILURE,
   SEND_VERSION_REQUEST,
   SEND_VERSION_SUCCESS,
-  SEND_VERSION_FAILURE
+  SEND_VERSION_FAILURE,
+  COMMIT_INFO_REQUEST,
+  COMMIT_INFO_SUCCESS,
+  COMMIT_INFO_FAILURE,
+  GET_FILE_ID
 } from '../type_actions'
 
-export default function versioningReducer(state = {
+const initialState  = {
     file: {},
     stream_file_id: null,
     isFetching: false,
@@ -22,8 +26,11 @@ export default function versioningReducer(state = {
     isInitiated: false,
     isWatching: false,
     version: 0,
+    didFailed: false,
     filesCommited: []
-  }, action) {
+  }
+
+export default function versioningReducer(state = initialState, action) {
   switch (action.type) {
     case SELECT_FILE:
       return Object.assign({}, state, {
@@ -39,7 +46,7 @@ export default function versioningReducer(state = {
       })
     case END_WATCHING:
       return Object.assign({}, state, {
-        isWatching: false
+        initialState
       })
     case DROPBOX_REQUEST:
       return Object.assign({}, state, {
@@ -64,7 +71,7 @@ export default function versioningReducer(state = {
         isInitiated: true,
         version: action.version,
         stream_file_id: action.stream_file_id,
-        filesCommited: state.filesCommited.concat([action.new_commit])
+        filesCommited: [action.new_commit].concat(state.filesCommited)
       })
     case INIT_FAILURE:
       return Object.assign({}, state, {
@@ -79,11 +86,31 @@ export default function versioningReducer(state = {
       return Object.assign({}, state, {
         isFetching: false,
         version: action.version,
-        filesCommited: state.filesCommited.concat([action.new_commit])
+        filesCommited: [action.new_commit].concat(state.filesCommited)
       })
     case SEND_VERSION_FAILURE:
       return Object.assign({}, state, {
         isFetching: false
+      })
+    case COMMIT_INFO_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case COMMIT_INFO_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        version: action.version,
+        filesCommited: action.commits,
+        isInitiated: action.isInitiated
+      })
+    case COMMIT_INFO_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didFailed: true
+      })
+    case GET_FILE_ID:
+      return Object.assign({}, state, {
+        stream_file_id: action.stream_file_id
       })
     default:
       return state

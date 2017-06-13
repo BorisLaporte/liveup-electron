@@ -1,6 +1,7 @@
 import {
   FILL_USER,
-  EMPTY_USER
+  EMPTY_USER,
+  FILL_CHANNEL
 } from 'STORE/type_actions'
 
 export function fillUser(creds) {
@@ -13,5 +14,12 @@ export function fillUser(creds) {
 export function emptyUser() {
   return {
     type: EMPTY_USER
+  }
+}
+
+export function fillChannel(channel) {
+  return {
+    type: FILL_CHANNEL,
+    channel: channel
   }
 }

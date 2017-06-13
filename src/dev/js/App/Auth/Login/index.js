@@ -11,7 +11,7 @@ import {addError, TN} from 'STORE/actions/notification'
 class Login extends Component {
 
   onSubmit(e) {
-    const {dispatch} = this.props
+    const {dispatch, isAuthenticated} = this.props
     const {email, password} = this.refs
 
     e.preventDefault()
@@ -21,7 +21,9 @@ class Login extends Component {
       password: password.value.trim()
     }
     if (creds.email && creds.password){
-      dispatch(loginUser(creds))
+      if (!isAuthenticated){
+        dispatch(loginUser(creds))
+      }
     } else {
       dispatch(addError(TN.MISSING_FIELDS, "Veuillez remplir tous les champs"))
     }
@@ -29,6 +31,8 @@ class Login extends Component {
   }
 
   componentWillMount() {
+    const {dispatch} = this.props
+    dispatch(addError(TN.MISSING_FIELDS, "Veuillez remplir tous les champs"))
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -45,7 +49,7 @@ class Login extends Component {
             <div className="fields">
               <div className="label-input">
                 <label htmlFor="email">
-                  votre <span className="bold">identifiant</span>
+                  Votre <span className="bold">identifiant</span>
                 </label>
                 <input 
                   id="email"
@@ -53,12 +57,12 @@ class Login extends Component {
                   type="text"
                   name="email"
                   placeholder="email"
-                  defaultValue="boris@gmail.com"
+                  defaultValue="test@test.com"
                 />
               </div>
               <div className="label-input no-margin">
                 <label htmlFor="password">
-                  votre <span className="bold">mot de passe</span>
+                  Votre <span className="bold">mot de passe</span>
                 </label>
                 <input
                   id="password"

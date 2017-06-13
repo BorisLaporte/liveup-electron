@@ -42,15 +42,8 @@ class CreateCommit extends Component {
   }
 
   getHumanDate(time){
-    const now = moment()
-    const fileTime = moment(time)
-    console.log(now)
-    console.log(fileTime)
-    const diff = fileTime.diff(now)
-    console.log(diff)
-    const finalTime = moment.duration(diff).humanize(true)
-    console.log(finalTime)
-    return finalTime
+    moment.locale('fr')
+    return moment(time).fromNow()
   }
 
 

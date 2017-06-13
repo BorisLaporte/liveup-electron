@@ -2,22 +2,45 @@ import React, { Component } from 'react'
 import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-
-import Navbar from './Navbar'
+import {STATUS} from 'STORE/reducers/stream'
 
 class Dashboard extends Component {
   componentWillMount() {
-    this.redirectOnLogout()
+    this.redirect()
+    this.redirectOnStreaming()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.redirectOnLogout()
+    const {status} = this.props
+    this.redirect()
+    if (prevProps.status != status){
+      this.redirectOnStreaming()
+    }
   }
 
-  redirectOnLogout(){
-    const {isAuthenticated, router} = this.props
-    if (!isAuthenticated) {
+  redirect(){
+    const {isAuthenticated, router, status, route, channel} = this.props
+    if (!isAuthenticated || (isAuthenticated && !channel)) {
       router.push('/')
+    }
+  }
+
+  redirectOnStreaming(){
+    const {status, route, router} = this.props
+    let nextRoute = ""
+    switch(status){
+      case STATUS.STREAMING:
+        nextRoute = '/dashboard/streaming'
+        break
+      case STATUS.FINISHED:
+        nextRoute = '/dashboard/end-stream'
+        break
+      case null:
+        nextRoute = '/dashboard'
+        break
+    }
+    if (router.location.pathname != nextRoute){
+      router.push(nextRoute)
     }
   }
 
@@ -27,11 +50,12 @@ class Dashboard extends Component {
     return (
       <div className="fullscreen">
         {
-          user_id
-          &&
+          user_id ?
           <div className="fullscreen">
             {children}
           </div>
+          :
+          <div>LOADING</div>
         }
       </div>
     )
@@ -44,19 +68,24 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
 
-  const {authReducer, userReducer} = state
+  const {authReducer, userReducer, streamReducer} = state
 
   const {
     isAuthenticated
   } = authReducer
 
+  const {status} = streamReducer
+
   const {
-    id: user_id
+    id: user_id,
+    channel
   } = userReducer
   
   return {
     isAuthenticated,
-    user_id
+    status,
+    user_id,
+    channel
   }
 }
 

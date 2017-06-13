@@ -5,6 +5,7 @@ import OneNotif from './OneNotif'
 import './notifications.scss'
 
 class Notification extends React.Component {
+
   render() {
     const {notif, id, dispatch} = this.props
     return (

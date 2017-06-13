@@ -6,6 +6,9 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   LOGOUT_SUCCESS,
+  BECOMRE_STREAMER_REQUEST,
+  BECOMRE_STREAMER_SUCCESS,
+  BECOMRE_STREAMER_FAILURE,
   LOST_SESSION
 } from 'STORE/type_actions'
 
@@ -46,6 +49,18 @@ export default function authReducer(state = {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false
+      })
+    case BECOMRE_STREAMER_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case BECOMRE_STREAMER_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+    case BECOMRE_STREAMER_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {

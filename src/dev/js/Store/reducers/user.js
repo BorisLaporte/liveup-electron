@@ -1,6 +1,7 @@
 import {
   FILL_USER,
-  EMPTY_USER
+  EMPTY_USER,
+  FILL_CHANNEL
 } from 'STORE/type_actions'
 
 // The auth reducer. The starting state sets authentication
@@ -32,6 +33,10 @@ export default function userReducer(state = initialState, action) {
         live: action.user.live,
         channel: action.user.channel,
         streams: action.user.streams
+      })
+    case FILL_CHANNEL:
+      return Object.assign({}, state, {
+        channel: action.channel
       })
     case EMPTY_USER:
       return Object.assign({}, state, {
