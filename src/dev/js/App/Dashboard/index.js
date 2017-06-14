@@ -4,6 +4,9 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {STATUS} from 'STORE/reducers/stream'
 
+
+import LoaderPage from 'APP/LoaderPage'
+
 class Dashboard extends Component {
   componentWillMount() {
     this.redirect()
@@ -46,16 +49,16 @@ class Dashboard extends Component {
 
 
   render() {
-    const {dispatch, children, user_id} = this.props
+    const {dispatch, children, user_id, isAuthenticated, isFetching} = this.props
     return (
       <div className="fullscreen">
         {
-          user_id ?
+          (user_id && isAuthenticated) ?
           <div className="fullscreen">
             {children}
           </div>
           :
-          <div>LOADING</div>
+          <LoaderPage text={"CHARGEMENT"} />
         }
       </div>
     )
@@ -74,7 +77,10 @@ function mapStateToProps(state) {
     isAuthenticated
   } = authReducer
 
-  const {status} = streamReducer
+  const {
+    status,
+    isFetching
+  } = streamReducer
 
   const {
     id: user_id,
@@ -84,6 +90,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated,
     status,
+    isFetching,
     user_id,
     channel
   }

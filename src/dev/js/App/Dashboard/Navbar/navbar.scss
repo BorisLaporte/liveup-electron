@@ -47,8 +47,21 @@
         color: $black;
         transition: color 0.2s ease-in-out;
 
-        &:hover{
+        &.path{
+          color: $light-grey;
+          user-select: none;
+        }
+
+        &.active{
           color: $blue;
+          user-select: none;
+        }
+
+        &.deconnexion{
+          color: $black;
+          &:hover{
+            color: $purple;
+          }
         }
       }
     }

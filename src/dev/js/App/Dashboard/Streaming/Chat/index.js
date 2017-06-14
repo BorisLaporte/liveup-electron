@@ -5,6 +5,16 @@ import noAvatarImg from 'IMG/usernopicture.svg'
 import './chat.scss'
 
 class Chat extends Component {
+
+  scrollBottom(){
+    const {conversation} = this.refs
+    conversation.scrollTop = conversation.scrollHeight
+  }
+
+  componentDidMount() {
+    this.scrollBottom()
+  }
+
   render() {
     const {pseudo} = this.props
     return (
@@ -33,7 +43,7 @@ class Chat extends Component {
               <div className="indicator"></div>
             </div>
           </div>
-          <div className="conversation">
+          <div className="conversation" ref="conversation">
             <div className="message">
               <div className="avatar">
                 <img src={noAvatarImg}/>

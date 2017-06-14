@@ -50,8 +50,7 @@ function startWatching() {
 
 export function endWatching() {
   return {
-    type: END_WATCHING,
-    isInitiated: false
+    type: END_WATCHING
   }
 }
 

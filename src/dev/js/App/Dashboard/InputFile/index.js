@@ -59,11 +59,11 @@ export default class InputFile extends Component {
     } catch (e) {
       return false
     }
-    if (file.name.length > 14){
-      const nameFile = file.name.substring(0, 14) + "..."
-      this.setState({nameFile: nameFile})
+    let nameFile = file.name
+    if (nameFile.length > 14){
+      nameFile = nameFile.substring(0, 14) + "..."
     }
-
+    this.setState({nameFile: nameFile})
     onFileSelected(file)
     return file
   }

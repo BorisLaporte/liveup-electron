@@ -13,7 +13,7 @@ export default function configureStore() {
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware(
       thunkMiddleware,
-      loggerMiddleware,
+      // loggerMiddleware,
     )
   )
 }

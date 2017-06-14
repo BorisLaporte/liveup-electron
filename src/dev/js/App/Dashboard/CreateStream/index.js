@@ -8,6 +8,8 @@ import {getSubCategories} from 'STORE/actions/sub_categories'
 import {initFile} from 'STORE/actions/versioning'
 
 import Navbar from '../Navbar'
+import LoaderPage from 'APP/LoaderPage'
+
 import InputFile from '../InputFile'
 import './createStream.scss'
 
@@ -50,9 +52,11 @@ class CreateStream extends Component {
   }
 
   componentWillMount() {
-    const {dispatch} = this.props
+    const {dispatch, sub_categories} = this.props
     // this.redirectOnStreaming()
-    dispatch(getSubCategories())
+    if (sub_categories.length < 1){
+      dispatch(getSubCategories())
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -67,7 +71,7 @@ class CreateStream extends Component {
   }
 
   render() {
-    const {sub_categories, dispatch} = this.props
+    const {sub_categories, dispatch, isFetching} = this.props
     const button = {
       text: "Créez le stream",
       color: "blue",
@@ -79,6 +83,7 @@ class CreateStream extends Component {
         <Navbar
           dispatch={dispatch}
           button={button}
+          active="CRÉATION STREAM"
         />
         <div className="container form">
           <div className="in-middle core-form">
@@ -94,8 +99,7 @@ class CreateStream extends Component {
                 ref="name"
                 type="text"
                 name="name"
-                placeholder="name"
-                defaultValue="petittest"
+                placeholder="Le nom du stream"
               />
             </div>
             <div className="label-input">
@@ -118,8 +122,7 @@ class CreateStream extends Component {
                 id="desc"
                 rows="5"
                 ref="desc"
-                placeholder="Description"
-                defaultValue="Le petit Benjamin est la chaîne pour les professionnels pour ne jamais apprendre tout seul."
+                placeholder="La Description"
               ></textarea>
             </div>
           </div>
@@ -127,6 +130,10 @@ class CreateStream extends Component {
         <div className="bottom-upload">
           <InputFile onFileSelected={this.getFile}/>
         </div>
+        {
+          isFetching &&
+          <LoaderPage text={"CREATION STREAM"} />
+        }
       </div>
     )
   }
@@ -148,13 +155,15 @@ function mapStateToProps(state) {
   const {sub_categories} = subCategoriesReducer
 
   const {
-    status
+    status,
+    isFetching
   } = streamReducer
   
   return {
     user_id,
     sub_categories,
-    status
+    status,
+    isFetching
   }
 }
 

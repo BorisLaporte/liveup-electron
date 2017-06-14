@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 
 import './login.scss'
-// import 'IMG/iconesbg.svg'
 
 import {loginUser} from 'STORE/actions/connection'
 import {addError, TN} from 'STORE/actions/notification'
@@ -55,8 +54,7 @@ class Login extends Component {
                   ref="email"
                   type="text"
                   name="email"
-                  placeholder="email"
-                  defaultValue="test@test.com"
+                  placeholder="Entrez votre email"
                 />
               </div>
               <div className="label-input no-margin">
@@ -68,8 +66,7 @@ class Login extends Component {
                   ref="password"
                   type="password"
                   name="password"
-                  placeholder="password"
-                  defaultValue="password"
+                  placeholder="Mot de passe"
                 />
               </div>
             </div> 

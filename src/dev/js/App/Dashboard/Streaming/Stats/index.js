@@ -5,6 +5,7 @@ import {Link, withRouter} from 'react-router'
 
 // import {} from 'STORE/actions/stream'
 import eyeImg from 'IMG/eye.svg'
+import evolutionImg from 'IMG/evolution-viewers.png'
 import './stats.scss'
 
 class Stats extends Component {
@@ -25,6 +26,7 @@ class Stats extends Component {
           </div>
         </div>
         <div className="evolution">
+          <img src={evolutionImg}/>
         </div>
       </div>
     )

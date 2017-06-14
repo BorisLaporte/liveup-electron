@@ -19,6 +19,7 @@ export const STATUS = {
 
 export default function streamReducer(state = {
     isFetching: false,
+    isClosing: false,
     status: localStorage.getItem('liveup_stream_status') || null,
     stream: {}
   }, action) {
@@ -55,10 +56,12 @@ export default function streamReducer(state = {
     case END_STREAM_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
+        isClosing: true
       })
     case END_STREAM_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
+        isClosing: false,
         status: STATUS.FINISHED,
         stream: {}
       })

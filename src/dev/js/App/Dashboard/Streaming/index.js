@@ -10,6 +10,7 @@ import Stats from './Stats'
 import Versioning from './Versioning'
 import Chat from './Chat'
 import Navbar from '../Navbar'
+import LoaderPage from 'APP/LoaderPage'
 import {STATUS} from 'STORE/reducers/stream'
 import {getInfoCommit} from 'STORE/reducers/versioning'
 
@@ -44,7 +45,7 @@ class Streaming extends Component {
   }
 
   render() {
-    const {dispatch, stream, channel} = this.props
+    const {dispatch, stream, channel, isFetching, isClosing} = this.props
     const button = {
       text: "Arrêtez le stream",
       color: "red",
@@ -53,10 +54,11 @@ class Streaming extends Component {
     }
     return (
       <div id="streaming" className="flex-column-screen fullscreen container">
-        <Navbar dispatch={dispatch} button={button}/>
+        <Navbar dispatch={dispatch} button={button} 
+          active="LIVE STREAM"/>
         {
           (Object.keys(stream).length > 0)
-          &&
+          ?
           <div className="container">
             <div className="left-part">
               <Versioning />
@@ -69,6 +71,13 @@ class Streaming extends Component {
               <Chat />
             </div>
           </div>
+          :
+          <LoaderPage text={"RÉCUPÉRATION STREAM"} />
+        }
+        {
+          isClosing
+          &&
+          <LoaderPage text={"ARRÊT STREAM"} />
         }
       </div>
     )
@@ -93,13 +102,17 @@ function mapStateToProps(state) {
 
   const {
     status,
-    stream
+    stream,
+    isFetching,
+    isClosing
   } = streamReducer
   
   return {
     user_id,
     status,
     stream,
+    isFetching,
+    isClosing,
     channel,
     filesCommited
   }

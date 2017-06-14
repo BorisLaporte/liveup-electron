@@ -2,13 +2,16 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  CHECK_CONNECTED_REQUEST,
+  CHECK_CONNECTED_SUCCESS,
+  CHECK_CONNECTED_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   LOGOUT_SUCCESS,
-  BECOMRE_STREAMER_REQUEST,
-  BECOMRE_STREAMER_SUCCESS,
-  BECOMRE_STREAMER_FAILURE,
+  BECOME_STREAMER_REQUEST,
+  BECOME_STREAMER_SUCCESS,
+  BECOME_STREAMER_FAILURE,
   LOST_SESSION
 } from 'STORE/type_actions'
 
@@ -35,6 +38,18 @@ export default function authReducer(state = {
         isFetching: false,
         isAuthenticated: false
       })
+    case CHECK_CONNECTED_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case CHECK_CONNECTED_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+    case CHECK_CONNECTED_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
     case SIGNUP_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
@@ -50,15 +65,15 @@ export default function authReducer(state = {
         isFetching: false,
         isAuthenticated: false
       })
-    case BECOMRE_STREAMER_REQUEST:
+    case BECOME_STREAMER_REQUEST:
       return Object.assign({}, state, {
         isFetching: true
       })
-    case BECOMRE_STREAMER_SUCCESS:
+    case BECOME_STREAMER_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false
       })
-    case BECOMRE_STREAMER_FAILURE:
+    case BECOME_STREAMER_FAILURE:
       return Object.assign({}, state, {
         isFetching: false
       })

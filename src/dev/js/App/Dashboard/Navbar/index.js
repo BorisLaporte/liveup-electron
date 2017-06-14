@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 
@@ -7,15 +8,29 @@ import {logoutUser} from 'STORE/actions/connection'
 import logo from 'IMG/logo_liveup.svg'
 import './navbar.scss'
 
-export default class Navbar extends Component {
+class Navbar extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      menu: [
+        'CRÉATION STREAM',
+        'LIVE STREAM',
+        'FINALISATION VOD'
+      ]
+    }
+  }
 
   handleLogout(e){
     const {dispatch} = this.props
+    e.preventDefault()
     dispatch(logoutUser())
   }
 
   render() {
-    const {text, color, img, callback} = this.props.button
+    const {button, active} = this.props
+    const {text, color, img, callback} = button
+    const {menu} = this.state
     return (
       <div id="navbar">
         <div className="left-part">
@@ -23,14 +38,23 @@ export default class Navbar extends Component {
             <img src={logo} alt="Logo"/>
           </div>
           <div className="menu">
-            <a className="link" href="#">INFORMATIONS GÉNÉRALES</a>
-            <a className="link" href="#">LIVE STREAM</a>
-            <a className="link" href="#">FINALISATION VOD</a>
+            <a
+              className="link deconnexion"
+              href="#"
+              onClick={(event) => this.handleLogout(event)}
+            >
+
+              DÉCONNEXION
+            </a>
+            {
+              menu.map(function(value, key){
+                return (
+                    <div key={key} className={"link " + (active == value ? 'active' : 'path')} >{value}</div>
+                  )
+              })
+            }
           </div>
         </div>
-        <button onClick={(event) => this.handleLogout(event)} className="btn btn-primary">
-          Logout
-        </button>
         <div className="right-part">
           <button className={"big-btn " + color} onClick={(e) => callback(e)}>
             <img className="img" src={img}/>
@@ -50,3 +74,19 @@ Navbar.propTypes = {
     callback: PropTypes.func
   })
 }
+
+
+function mapStateToProps(state) {
+
+  const {authReducer} = state
+
+  const {
+    isAuthenticated
+  } = authReducer
+  
+  return {
+    isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps)(Navbar)

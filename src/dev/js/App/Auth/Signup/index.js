@@ -140,7 +140,7 @@ class Signup extends Component {
                   </div>
                   <div className="label-input">
                     <label htmlFor="password_confirmation">
-                      confirmer Votre <span className="bold">mot de passe</span>
+                      Confirmer Votre <span className="bold">mot de passe</span>
                     </label>
                     <input 
                       id="password_confirmation"

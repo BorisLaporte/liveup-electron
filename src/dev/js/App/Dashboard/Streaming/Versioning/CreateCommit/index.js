@@ -4,9 +4,12 @@ import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router'
 import moment from 'moment'
 
+import {addError, TN} from 'STORE/actions/notification'
 import {commitFile} from 'STORE/actions/versioning'
 import addImg from 'IMG/add.svg'
 import bubbleImg from 'IMG/marqueur.svg'
+
+import LoaderModule from 'APP/LoaderModule'
 
 import './createCommit.scss'
 
@@ -25,8 +28,14 @@ class CreateCommit extends Component {
     const {commit} = this.refs
     const commitText = commit.value.trim()
     
-
-    dispatch(commitFile(file, version, stream_file_id, commitText))
+    if (commitText != ""){
+      if (!isFetching){
+        dispatch(commitFile(file, version, stream_file_id, commitText))
+        commit.value = ""
+      }
+    } else {
+      dispatch(addError(TN.MISSING_FIELDS, "Donnez un nom à votre commit"))
+    }
   }
 
   onSubmit(e){
@@ -34,9 +43,13 @@ class CreateCommit extends Component {
     const {commit} = this.refs
     e.preventDefault()
     const commitText = commit.value.trim()
-    if (commitText){
-      dispatch(commitFile(file, version, stream_file_id, commitText))
-      commit.value = ""
+    if (commitText != ""){
+      if (!isFetching){
+        dispatch(commitFile(file, version, stream_file_id, commitText))
+        commit.value = ""
+      }
+    } else {
+      dispatch(addError(TN.MISSING_FIELDS, "Donnez un nom à votre commit"))
     }
     return false
   }
@@ -53,26 +66,28 @@ class CreateCommit extends Component {
     return (
       <div id="createCommit">
         <div className="form-container">
-          {
-            isFetching ?
-            <div>LOADING</div>
-            :
-            <form className="form add-commit" onSubmit={this.onSubmit}>
-              <div className="btn-plus">
-                <img src={addImg} alt="add"/>
-                <input type="submit" value=""></input>
-              </div>
-              <input
-                type="text"
-                ref="commit"
-                id="commit"
-                name="commit"
-                className="commit-field"
-                required
-                placeholder="Ajouter un instant clé"
-              />
-            </form>
-          }
+          <form className="form add-commit" onSubmit={this.onSubmit}>
+            <div className="container-btn">
+              {
+                isFetching ?
+                <LoaderModule />
+                :
+                <div className="btn-plus">
+                  <img src={addImg} alt="add"/>
+                  <input type="submit" value=""></input>
+                </div>
+              }
+            </div>
+            <input
+              type="text"
+              ref="commit"
+              id="commit"
+              name="commit"
+              className="commit-field"
+              required
+              placeholder="Ajouter un instant clé"
+            />
+          </form>
         </div>
         <div className="list-commit">
           {

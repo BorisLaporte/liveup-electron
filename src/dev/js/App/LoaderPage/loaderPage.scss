@@ -1,0 +1,40 @@
+@import '~SASS/variables.scss';
+
+.loader-page{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+
+  .shadow{
+    background-color: $light-blue;
+    opacity: 0.5;
+  }
+  .content-loader{
+    border-radius: 3px;
+    background-color: $white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img{
+      height: 30px;
+      width: auto;
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+    }
+    .text{
+      color: $black;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      font-size: 0.875em;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+    }
+  }
+}

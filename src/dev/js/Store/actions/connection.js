@@ -2,6 +2,9 @@ import {
   requestLogin,
   receiveLogin,
   loginError,
+  requestCheckConnected,
+  receiveCheckConnected,
+  checkConnectedError,
   requestSignup,
   receiveSignup,
   signupError,
@@ -27,6 +30,7 @@ import {URL_API} from './var'
 
 import {endStream} from './stream'
 import {endWatching} from './versioning'
+import {STATUS} from '../reducers/stream'
 // const url = 'https://the-dojo-api.herokuapp.com'
 
 // Calls the API to get a token and
@@ -61,7 +65,10 @@ export function loginUser(creds) {
           dispatch(fillUser(user))
           dispatch(receiveLogin(user))
         }
-      }).catch(err => dispatch(addError(TN.LOGIN_FAILED, "Votre identifiant ou mot de passe est incorrect")))
+      }).catch(err => {
+        dispatch(loginError("Une érreur est survenue"))
+        dispatch(addError(TN.LOGIN_FAILED, "Une érreur est survenue"))
+      })
   }
 }
 
@@ -96,7 +103,10 @@ export function signupUser(creds) {
           dispatch(receiveSignup())
           dispatch(addSuccess(TN.SIGNUP_SUCCESS, "Votre compte vient d'être créer"))
         }
-      }).catch(err => dispatch(addError(TN.SIGNUP_FAILED, "Une érreur s'est produite")))
+      }).catch(err => {
+        dispatch(signupError())
+        dispatch(addError(TN.SIGNUP_FAILED, "Une érreur s'est produite"))
+      })
   }
 }
 
@@ -116,38 +126,67 @@ export function logoutUser() {
 
   return dispatch => {
 
-    // const token = localStorage.getItem('liveup_authentication_token')
-    // const email = localStorage.getItem('liveup_email')
+    const token = localStorage.getItem('liveup_authentication_token')
+    const email = localStorage.getItem('liveup_email')
 
-    // const config = {
-    //   method: 'DELETE',
-    //   headers: { 
-    //     'X-User-Email': email,
-    //     'X-User-Token': token
-    //   }
-    // }
+    const config = {
+      method: 'DELETE',
+      headers: { 
+        'X-User-Email': email,
+        'X-User-Token': token
+      }
+    }
 
-    // if (!email || !token){
-    //   return false
-    // }
-    // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogout())
-    dispatch(receiveLogout())
 
-    // return fetch(URL_API + '/api/v1/sessions', config)
-    //   .then(response => {
-    //     console.log(response)
-    //     dispatch(receiveLogout())
-    //   }).catch(err => console.log("Error: ", err))
+    if (!email || !token){
+      dispatch(receiveLogout())
+      dispatch(clearEverything())
+    } else {
+      const stream_id = localStorage.getItem('liveup_stream_id')
+      const stream_status = localStorage.getItem('liveup_stream_status')
+      if (stream_id && stream_status != STATUS.FINISHED){
+        dispatch(endStream(stream_id)).then(() => {
+          // dispatch(receiveLogout())
+          // dispatch(clearEverything()) 
+          fetch(URL_API + '/api/v1/sessions', config)
+            .then(response => {
+              dispatch(receiveLogout())
+              dispatch(clearEverything()) 
+     
+            }).catch(err => {
+              dispatch(receiveLogout())
+              dispatch(clearEverything())
 
-    dispatch(clearEverything())
+            })
+        }).catch(() => {
+          dispatch(receiveLogout())
+          dispatch(clearEverything())
+
+        })
+      } else {
+        dispatch(receiveLogout())
+        dispatch(clearEverything())
+      }
+    
+    }
   }
 }
 
 export function didLostSession(){
   return dispatch => {
-    dispatch(clearEverything())
-    dispatch(addError(TN.LOST_SESSION, "Votre session a expirée"))
+
+    const stream_id = localStorage.getItem('liveup_stream_id')
+    const stream_status = localStorage.getItem('liveup_stream_status')
+    if (stream_id && stream_status != STATUS.FINISHED){
+      dispatch(endStream(stream_id)).then(() => {
+        dispatch(clearEverything())
+        dispatch(addError(TN.LOST_SESSION, "Votre session a expirée")) 
+      })
+    } else {
+      dispatch(clearEverything())
+      dispatch(addError(TN.LOST_SESSION, "Votre session a expirée")) 
+    }
   }
 }
 
@@ -188,15 +227,21 @@ export function checkIfConnected() {
       }
     }
 
+    dispatch(requestCheckConnected())
+
     return fetch(URL_API + '/api/v1/users', config)
       .then(response =>
         response.json().then(user => ({ user, response }))
             ).then(({ user, response }) =>  {
         if (!response.ok){
-          //ERRROR
+          dispatch(checkConnectedError())
+          dispatch(clearEverything())
+          dispatch(addError(TN.SIGNUP_FAILED, "Votre session a expirée"))
         }
+        dispatch(receiveCheckConnected())
         dispatch(fillUser(user))
       }).catch(err => {
+        dispatch(checkConnectedError())
         dispatch(clearEverything())
         dispatch(addError(TN.SIGNUP_FAILED, "Votre session a expirée"))
       })
@@ -226,7 +271,6 @@ export function becomeStreamer(channel){
       })
     }
 
-    console.log(config)
     dispatch(requestBecomeStreamer())
     return fetch(URL_API + '/api/v1/users', config)
       .then(response =>
@@ -236,8 +280,6 @@ export function becomeStreamer(channel){
           dispatch(addError(TN.SIGNUP_FAILED, "Ce channel n'est pas valide"))
         }
         dispatch(fillChannel(user.channel))
-        console.log("SUPER USER")
-        console.log(user)
         dispatch(receiveBecomeStreamer(user.channel))
         dispatch(addSuccess(TN.BECOME_STREAMER_SUCCESS, "Félicitation ! Vous êtes désormais un streamer"))
       }).catch(err => {

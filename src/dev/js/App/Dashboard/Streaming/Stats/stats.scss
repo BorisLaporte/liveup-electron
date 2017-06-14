@@ -45,9 +45,18 @@
       overflow: hidden;
       width: 100%;
       flex-shrink: 1;
-      background-color: $white;
+      // background-color: $white;
       height: 100%;
+      overflow: hidden;
+      position: relative;
 
+      img{
+        position: absolute;
+        width: auto;
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
   }
 }

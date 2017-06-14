@@ -46,7 +46,15 @@ export default function versioningReducer(state = initialState, action) {
       })
     case END_WATCHING:
       return Object.assign({}, state, {
-        initialState
+        file: {},
+        stream_file_id: null,
+        isFetching: false,
+        isFetchingDropbox: false,
+        isInitiated: false,
+        isWatching: false,
+        version: 0,
+        didFailed: false,
+        filesCommited: []
       })
     case DROPBOX_REQUEST:
       return Object.assign({}, state, {

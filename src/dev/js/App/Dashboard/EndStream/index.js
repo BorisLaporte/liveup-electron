@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 
 import Navbar from '../Navbar'
 import uploadImg from 'IMG/upload.svg'
+import LoaderPage from 'APP/LoaderPage'
 
 import {uploadStream, getStreamInfo} from 'STORE/actions/stream'
 import {STATUS} from 'STORE/reducers/stream'
@@ -29,7 +30,7 @@ class EndStream extends Component {
   }
 
   render() {
-    const {dispatch, stream} = this.props
+    const {dispatch, stream, isFetching} = this.props
     const button = {
       text: "Mettre en ligne",
       color: "blue",
@@ -43,10 +44,11 @@ class EndStream extends Component {
         <Navbar
             dispatch={dispatch}
             button={button}
+            active="FINALISATION VOD"
           />
         <div className="wrapper-end-stream">
           {
-            (stream && (Object.keys(stream).length > 0)) ?
+            (stream && (Object.keys(stream).length > 0)) &&
             <div className="container-end-stream">
               <div className="left-part">
                 <Commits />
@@ -56,10 +58,13 @@ class EndStream extends Component {
                 <Timeline />
               </div>
             </div>
-            :
-            <div>LOADING</div>
           }
         </div>
+        {
+          (isFetching || !stream || (Object.keys(stream).length < 1))
+          &&
+          <LoaderPage text={"RÉCUPÉRATION STREAM"}/>
+        }
       </div>
     )
   }

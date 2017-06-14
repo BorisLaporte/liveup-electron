@@ -6,6 +6,8 @@ import {Link, withRouter} from 'react-router'
 import CreateCommit from './CreateCommit'
 import InitCommit from './InitCommit'
 
+import LoaderModule from 'APP/LoaderModule'
+
 import './versioning.scss'
 
 class Versioning extends Component {
@@ -16,7 +18,7 @@ class Versioning extends Component {
       <div id="versioning">
         {
           (isFetching && !isInitiated) ?
-          <div>LOADING</div>
+          <LoaderModule/>
           :
           <div>
             {

@@ -14,7 +14,7 @@ import {
 } from '../type_actions'
 
 import {URL_API} from './var'
-import {initFile, getInfoCommit, endWatching} from './versioning'
+import {initFile, getInfoCommit, endWatching, cleanVersioning} from './versioning'
 import {clearEverything, didLostSession} from './connection'
 import {addError, addSuccess, TN} from './notification'
 
@@ -205,11 +205,19 @@ export function endStream(stream_id) {
 
     return fetch(URL_API + '/api/v1/streams/' + stream_id, config)
       .then(response => {
+        if (!response.ok){
+
+          dispatch(endStreamError())
+          return Promise.reject(null)
+        }
         
         localStorage.setItem('liveup_stream_status', STATUS.FINISHED)
         dispatch(endStreamSuccess())
 
-      }).catch(err => console.log("Error: ", err))
+      }).catch(err => 
+        {
+          dispatch(endStreamError())
+        })
   }
 }
 
@@ -225,12 +233,11 @@ export function uploadStream() {
     }
 
     dispatch(uploadStreamRequest())
-    dispatch(endWatching())
+    dispatch(cleanVersioning())
 
     localStorage.removeItem('liveup_stream_id')
     localStorage.removeItem('liveup_stream_status')
-    localStorage.removeItem('liveup_file')
-    localStorage.removeItem('liveup_file_id')
     dispatch(streamUploaded())
+    dispatch(addSuccess(TN.UPLOAD_STREAM_SUCCESS, "Votre stream a été uploadé"))
   }
 }

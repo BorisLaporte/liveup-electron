@@ -5,6 +5,8 @@ import {Link, withRouter} from 'react-router'
 
 import './auth.scss'
 
+import LoaderPage from 'APP/LoaderPage'
+
 class Auth extends Component {
 
   componentWillMount() {
@@ -12,7 +14,7 @@ class Auth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {isAuthenticated, channel} = this.props
+    const {isAuthenticated, channel, isFetching} = this.props
     if (prevProps.isAuthenticated != isAuthenticated || prevProps.channel != channel) {
       this.redirectOnLogin()
     }
@@ -36,7 +38,7 @@ class Auth extends Component {
   }
 
   render() {
-    const {dispatch, isAuthenticated, children} = this.props
+    const {dispatch, isAuthenticated, children, isFetching} = this.props
 
     const childrenWithProps = React.Children.map(children,
      (child) => React.cloneElement(child, {
@@ -49,6 +51,11 @@ class Auth extends Component {
       <div id="Auth" className="fullscreen">
         <div className="background-img fullscreen"></div>
         {childrenWithProps}
+        {
+          isFetching
+          &&
+          <LoaderPage text="CONNEXION" />
+        }
       </div>
     )
   }
@@ -65,13 +72,15 @@ function mapStateToProps(state) {
   const {authReducer, userReducer} = state
 
   const {
-    isAuthenticated
+    isAuthenticated,
+    isFetching
   } = authReducer
 
   const {channel} = userReducer
   
   return {
     isAuthenticated,
+    isFetching,
     channel
   }
 }

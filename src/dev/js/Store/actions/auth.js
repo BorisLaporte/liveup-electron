@@ -2,6 +2,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  CHECK_CONNECTED_REQUEST,
+  CHECK_CONNECTED_SUCCESS,
+  CHECK_CONNECTED_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
@@ -37,6 +40,24 @@ export function loginError(message) {
     isFetching: false,
     isAuthenticated: false,
     message
+  }
+}
+
+export function requestCheckConnected() {
+  return {
+    type: CHECK_CONNECTED_REQUEST
+  }
+}
+
+export function receiveCheckConnected() {
+  return {
+    type: CHECK_CONNECTED_SUCCESS
+  }
+}
+
+export function checkConnectedError() {
+  return {
+    type: CHECK_CONNECTED_FAILURE
   }
 }
 
