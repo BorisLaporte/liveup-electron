@@ -160,7 +160,7 @@ export function getStreamInfo(channel, getCommit = false) {
   return dispatch => {
 
     dispatch(getInfoStreamRequest())
-    return fetch(URL_API + '/api/v1/streams/' + channel, config)
+    return fetch(URL_API + '/api/v1/streams/show_boris/' + channel, config)
       .then(response =>
         response.json().then(content => ({ content, response }))
             ).then(({ content, response }) =>  {

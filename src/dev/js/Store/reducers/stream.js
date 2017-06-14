@@ -62,8 +62,7 @@ export default function streamReducer(state = {
       return Object.assign({}, state, {
         isFetching: false,
         isClosing: false,
-        status: STATUS.FINISHED,
-        stream: {}
+        status: STATUS.FINISHED
       })
     case UPLOAD_STREAM_REQUEST:
       return Object.assign({}, state, {
@@ -72,7 +71,8 @@ export default function streamReducer(state = {
     case UPLOAD_STREAM_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        status: null
+        status: null,
+        stream: {}
       })
     case UPLOAD_STREAM_FAILURE:
       return Object.assign({}, state, {

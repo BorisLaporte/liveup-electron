@@ -25,7 +25,7 @@ import {addError, TN} from './notification'
 
 const electron = window.require('electron')
 const fs = electron.remote.require('fs')
-const AdmZip = electron.remote.require('adm-zip')
+// const AdmZip = electron.remote.require('adm-zip')
 
 function selectFile(file) {
   return {

@@ -3,9 +3,10 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+var webpackTargetElectronRenderer = require('webpack-target-electron-renderer')
 
 
-module.exports = {
+const config = {
 
   entry: [
     './src/dev/js/index'
@@ -31,6 +32,10 @@ module.exports = {
     },
   },
 
+  node: {
+    __dirname: false,
+    __filename: false
+  },
 
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -79,3 +84,8 @@ module.exports = {
     ]
   }
 }
+
+// config.target = webpackTargetElectronRenderer(config)
+
+module.exports = config
+

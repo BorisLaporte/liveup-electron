@@ -6,6 +6,7 @@ import {Link, withRouter} from 'react-router'
 import {createStream} from 'STORE/actions/stream'
 import {getSubCategories} from 'STORE/actions/sub_categories'
 import {initFile} from 'STORE/actions/versioning'
+import {addError, TN} from 'STORE/actions/notification'
 
 import Navbar from '../Navbar'
 import LoaderPage from 'APP/LoaderPage'
@@ -44,6 +45,7 @@ class CreateStream extends Component {
       dispatch(createStream(stream, file))
     } else {
       // error
+      dispatch(addError(TN.MISSING_FIELDS, "Veuillez donner un nom au stream"))
     }
   }
 

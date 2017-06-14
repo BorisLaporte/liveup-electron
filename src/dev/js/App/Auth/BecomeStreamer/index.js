@@ -52,8 +52,7 @@ class BecomeStreamer extends Component {
                   ref="channel"
                   type="text"
                   name="channel"
-                  placeholder="identifiant Twitch"
-                  defaultValue="ogaminglol"
+                  placeholder="Identifiant Twitch"
                 />
               </div>
             </div> 

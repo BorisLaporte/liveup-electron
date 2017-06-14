@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 
 import noAvatarImg from 'IMG/usernopicture.svg'
 import './chat.scss'
+import chatJson from './chat.json'
 
 class Chat extends Component {
 
@@ -17,6 +18,7 @@ class Chat extends Component {
 
   render() {
     const {pseudo} = this.props
+    const {chatContent} = chatJson
     return (
       <div id="chat" className="chat-container">
         <div className="detail-user">
@@ -44,201 +46,25 @@ class Chat extends Component {
             </div>
           </div>
           <div className="conversation" ref="conversation">
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
-            <div className="message">
-              <div className="avatar">
-                <img src={noAvatarImg}/>
-              </div>
-              <div className="text-content">
-                <div className="pseudo">
-                  Pauline Taveneau
-                </div>
-                <div className="content-message"> 
-                  Salut je sais pas à quoi sert votre application mais j’adore discuter dans un chat
-                </div>
-              </div>
-            </div>
+            {
+              chatContent.map(function(value, key){
+                return (
+                  <div className="message" key={value.id}>
+                    <div className="avatar">
+                      <img src={noAvatarImg}/>
+                    </div>
+                    <div className="text-content">
+                      <div className="pseudo">
+                        {value.name}
+                      </div>
+                      <div className="content-message"> 
+                        {value.content}
+                      </div>
+                    </div>
+                  </div>
+                  )
+              })
+            }
 
           </div>
         </div>

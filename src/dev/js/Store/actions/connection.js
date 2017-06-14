@@ -152,21 +152,25 @@ export function logoutUser() {
           fetch(URL_API + '/api/v1/sessions', config)
             .then(response => {
               dispatch(receiveLogout())
-              dispatch(clearEverything()) 
+              dispatch(clearEverything())
+              dispatch(addSuccess(TN.LOGOUT, "Vous êtes déconnecté"))  
      
             }).catch(err => {
               dispatch(receiveLogout())
               dispatch(clearEverything())
+              dispatch(addSuccess(TN.LOGOUT, "Vous êtes déconnecté")) 
 
             })
         }).catch(() => {
           dispatch(receiveLogout())
           dispatch(clearEverything())
+          dispatch(addSuccess(TN.LOGOUT, "Vous êtes déconnecté")) 
 
         })
       } else {
         dispatch(receiveLogout())
         dispatch(clearEverything())
+        dispatch(addSuccess(TN.LOGOUT, "Vous êtes déconnecté")) 
       }
     
     }

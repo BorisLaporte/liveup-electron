@@ -1,5 +1,6 @@
 {
-  "name": "liveup-electron",
+  "name": "liveup",
+  "productName": "Liveup",
   "version": "1.0.0",
   "description": "liveup's electron",
   "main": "src/dev/js/electron-starter.js",
@@ -34,7 +35,8 @@
     "babel-preset-react": "^6.23.0",
     "compression-webpack-plugin": "^0.3.2",
     "css-loader": "^0.23.1",
-    "electron": "^1.6.2",
+    "electron": "^1.6.11",
+    "electron-installer-dmg": "^0.2.1",
     "electron-packager": "^8.7.1",
     "eslint": "^3.16.1",
     "eslint-config-airbnb-base": "^11.1.1",

@@ -33,7 +33,7 @@ class Signup extends Component {
 
     if (creds.password && creds.password_confirmation && creds.password === creds.password_confirmation){
 
-      if (creds.email && creds.first_name && creds.last_name && creds.pseudo && creds.channel){
+      if (creds.email && creds.first_name && creds.last_name && creds.pseudo){
         if (!isAuthenticated){
           dispatch(signupUser(creds))
         }

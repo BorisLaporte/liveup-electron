@@ -1,0 +1,40 @@
+{
+  "chatContent" : [
+    {
+      "id": 1,
+      "name": "Pauline Taveneau",
+      "content": "Wow impressionnant ce que tu fais"
+    },
+    {
+      "id": 2,
+      "name": "Mathieu Tourdes",
+      "content": "Oui ça me rappelle les travaux d'Ash Thorp dans Ghost in the Shell"
+    },
+    {
+      "id": 3,
+      "name": "Benjamin BEGUIN",
+      "content": "Lorsque je télécharge ton fichier je n'ai pas les typographies, c'est possible que tu nous les fournisses avec ? "
+    },
+    {
+      "id": 4,
+      "name": "Martin Ziserman",
+      "content": "+1 Sans les typographies c'est difficile de parcourir le fichier et comprendre comment tu travailles"
+    },
+    {
+      "id": 5,
+      "name": "Thomas Victoria",
+      "content": "J'ai essayé d'obtenir le même effet de lueur mais sans succès, une idée ?"
+    },
+    {
+      "id": 6,
+      "name": "Mathieu Tourdes",
+      "content": "@thomasvictoria Oui tu dois te rendre dans tes paramètres de rendus et activer l'efet glow avec comme valeur de diffusion 30%"
+    },
+    {
+      "id": 7,
+      "name": "Thomas Victoria",
+      "content": "Ok super merci beaucoup !"
+    }
+  ]
+}
+
