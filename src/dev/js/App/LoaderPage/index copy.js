@@ -1,7 +1,7 @@
 import React from 'react'
 import './loaderPage.scss'
 
-import loaderGif from 'IMG/logo.gif'
+import loaderGif from 'IMG/loader.gif'
 
 const LoaderPage = ({text}) => {
   return (

@@ -59,12 +59,13 @@ class EndStream extends Component {
               </div>
             </div>
           }
+          {
+            (isFetching || !stream || (Object.keys(stream).length < 1))
+            &&
+            <LoaderPage text={"RÉCUPÉRATION STREAM"}/>
+          }
         </div>
-        {
-          (isFetching || !stream || (Object.keys(stream).length < 1))
-          &&
-          <LoaderPage text={"RÉCUPÉRATION STREAM"}/>
-        }
+        
       </div>
     )
   }

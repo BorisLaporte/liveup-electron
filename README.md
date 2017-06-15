@@ -7,10 +7,21 @@
 npm install
 npm run dev
 on an other terminal : 
-  npm run electron
+  npm run electron-dev
 
 ```
 
 ## PROD
 
-yet to be done
+```
+npm run build
+npm run electron-build
+```
+
+## packager
+
+within build folder
+
+```
+electron-packager . Liveup
+```

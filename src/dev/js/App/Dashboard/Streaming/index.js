@@ -22,6 +22,7 @@ class Streaming extends Component {
   componentWillMount() {
     const {status, channel, dispatch, stream, filesCommited} = this.props
     // this.redirectOnStoped()
+    console.log(channel)
     if (status == STATUS.STREAMING ){
       if (Object.keys(stream).length == 0){
         const isMissingCommit = (Object.keys(filesCommited).length < 1)
@@ -44,41 +45,52 @@ class Streaming extends Component {
     }
   }
 
+  stopStream(stream_id){
+    const {isFetching, dispatch} = this.props
+    if (!isFetching){
+      dispatch(endStream(stream_id))
+    }
+  }
+
   render() {
     const {dispatch, stream, channel, isFetching, isClosing} = this.props
+    const self = this
     const button = {
       text: "Arrêtez le stream",
       color: "red",
       img: stopStreamImg,
-      callback: (e) => {dispatch(endStream(stream.id))}
+      callback: (e) => {self.stopStream(stream.id)}
     }
     return (
       <div id="streaming" className="flex-column-screen fullscreen container">
         <Navbar dispatch={dispatch} button={button} 
           active="LIVE STREAM"/>
-        {
-          (Object.keys(stream).length > 0)
-          ?
-          <div className="container">
-            <div className="left-part">
-              <Versioning />
+        <div className="container-page">
+          {
+            (Object.keys(stream).length > 0)
+            ?
+            <div className="container">
+              <div className="left-part">
+                <Versioning />
+              </div>
+              <div className="middle-part">
+                <Live channel={channel} />
+                <Stats stream={stream} />
+              </div>
+              <div className="right-part">
+                <Chat />
+              </div>
             </div>
-            <div className="middle-part">
-              <Live channel={channel} />
-              <Stats stream={stream} />
-            </div>
-            <div className="right-part">
-              <Chat />
-            </div>
-          </div>
-          :
-          <LoaderPage text={"RÉCUPÉRATION STREAM"} />
-        }
-        {
-          isClosing
-          &&
-          <LoaderPage text={"ARRÊT STREAM"} />
-        }
+            :
+            <LoaderPage text={"RÉCUPÉRATION STREAM"} />
+          }
+          {
+            isClosing
+            &&
+            <LoaderPage text={"ARRÊT STREAM"} />
+          }
+        </div>
+        
       </div>
     )
   }

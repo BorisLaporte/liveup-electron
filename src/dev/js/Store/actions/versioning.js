@@ -214,7 +214,7 @@ function uploadDropbox(file, version, successCallback){
 
       } else {
         dispatch(dropboxFailure())
-        dispatch(addError(TN.READFILE_FAILURE, "Une érreur s'est produite avec le fichier"))
+        dispatch(addError(TN.READFILE_FAILURE, "Impossible de lire le fichier"))
       }
     })
   }

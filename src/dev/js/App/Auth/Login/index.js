@@ -47,7 +47,7 @@ class Login extends Component {
             <div className="fields">
               <div className="label-input">
                 <label htmlFor="email">
-                  Votre <span className="bold">identifiant</span>
+                  Votre <span className="bold">email</span>
                 </label>
                 <input 
                   id="email"

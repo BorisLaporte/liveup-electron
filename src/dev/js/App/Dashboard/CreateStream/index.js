@@ -29,7 +29,7 @@ class CreateStream extends Component {
   }
 
   handleClick() {
-    const {dispatch} = this.props
+    const {dispatch, isFetching} = this.props
     const {file} = this.state
     const {name, desc, subCategories} = this.refs
 
@@ -42,7 +42,9 @@ class CreateStream extends Component {
           sub_category_ids: [subCategories.value]
         }
       }
-      dispatch(createStream(stream, file))
+      if (!isFetching){
+        dispatch(createStream(stream, file))
+      }
     } else {
       // error
       dispatch(addError(TN.MISSING_FIELDS, "Veuillez donner un nom au stream"))
@@ -87,55 +89,57 @@ class CreateStream extends Component {
           button={button}
           active="CRÉATION STREAM"
         />
-        <div className="container form">
-          <div className="in-middle core-form">
-            <div className="title">
-              Je définis les paramétres de mon stream
-            </div>
-            <div className="label-input">
-              <label htmlFor="name">
-               votre <span className="bold">titre</span>
-              </label>
-              <input
-                id="name"
-                ref="name"
-                type="text"
-                name="name"
-                placeholder="Le nom du stream"
-              />
-            </div>
-            <div className="label-input">
-              <label htmlFor="subCategories">
-               la <span className="bold">sous-catégorie</span>
-              </label>
-              <select name="subCategories" id="subCategories" ref="subCategories">
-                <option value="" defaultValue>Séléctionnez une sous-catégorie</option>
-                {sub_categories.map(function(value, key){
-                  return <option key={key} value={value.id}>{value.name}</option>
-                })}
-              </select>
-            </div>
-            <div className="label-input">
-              <label htmlFor="desc">
-               votre <span className="bold">description</span>
-              </label>
-              <textarea
-                name="desc"
-                id="desc"
-                rows="5"
-                ref="desc"
-                placeholder="La Description"
-              ></textarea>
+        <div className="container-page">
+          <div className="container form">
+            <div className="in-middle core-form">
+              <div className="title">
+                Je définis les paramétres de mon stream
+              </div>
+              <div className="label-input">
+                <label htmlFor="name">
+                 Votre <span className="bold">titre</span>
+                </label>
+                <input
+                  id="name"
+                  ref="name"
+                  type="text"
+                  name="name"
+                  placeholder="Le nom du stream"
+                />
+              </div>
+              <div className="label-input">
+                <label htmlFor="subCategories">
+                 La <span className="bold">sous-catégorie</span>
+                </label>
+                <select name="subCategories" id="subCategories" ref="subCategories">
+                  <option value="" defaultValue>Séléctionnez une sous-catégorie</option>
+                  {sub_categories.map(function(value, key){
+                    return <option key={key} value={value.id}>{value.name}</option>
+                  })}
+                </select>
+              </div>
+              <div className="label-input">
+                <label htmlFor="desc">
+                 Votre <span className="bold">description</span>
+                </label>
+                <textarea
+                  name="desc"
+                  id="desc"
+                  rows="5"
+                  ref="desc"
+                  placeholder="La Description"
+                ></textarea>
+              </div>
             </div>
           </div>
+          <div className="bottom-upload">
+            <InputFile onFileSelected={this.getFile}/>
+          </div>
+          {
+            isFetching &&
+            <LoaderPage text={"CREATION STREAM"} />
+          }
         </div>
-        <div className="bottom-upload">
-          <InputFile onFileSelected={this.getFile}/>
-        </div>
-        {
-          isFetching &&
-          <LoaderPage text={"CREATION STREAM"} />
-        }
       </div>
     )
   }

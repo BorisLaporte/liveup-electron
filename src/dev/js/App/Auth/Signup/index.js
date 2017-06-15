@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 
 import {signupUser} from 'STORE/actions/connection'
+import {TN, addError} from 'STORE/actions/notification'
 import './signup.scss'
 
 class Signup extends Component {
@@ -37,7 +38,11 @@ class Signup extends Component {
         if (!isAuthenticated){
           dispatch(signupUser(creds))
         }
+      } else {
+        dispatch(addError(TN.MISSING_FIELDS, "Veuillez remplir tous les champs"))
       }
+    } else {
+      dispatch(addError(TN.MISSING_FIELDS, "Vos mot de passes ne sont pas identiques"))
     }
 
     return false

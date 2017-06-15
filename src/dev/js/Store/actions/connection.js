@@ -67,7 +67,7 @@ export function loginUser(creds) {
         }
       }).catch(err => {
         dispatch(loginError("Une érreur est survenue"))
-        dispatch(addError(TN.LOGIN_FAILED, "Une érreur est survenue"))
+        dispatch(addError(TN.LOGIN_FAILED, "Votre identifiant ou mot de passe est incorrect"))
       })
   }
 }
@@ -182,7 +182,7 @@ export function didLostSession(){
 
     const stream_id = localStorage.getItem('liveup_stream_id')
     const stream_status = localStorage.getItem('liveup_stream_status')
-    if (stream_id && stream_status != STATUS.FINISHED){
+    if (stream_id && stream_status == STATUS.STREAMING){
       dispatch(endStream(stream_id)).then(() => {
         dispatch(clearEverything())
         dispatch(addError(TN.LOST_SESSION, "Votre session a expirée")) 

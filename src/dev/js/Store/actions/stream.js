@@ -147,7 +147,11 @@ export function createStream(stream, file) {
             dispatch(initFile(content.id, file))
           }
         }
-      }).catch(err => dispatch(addError(TN.CREATE_STREAM_FAILURE, "Une érreur s'est produite")))
+      }).catch(err => {
+        
+        dispatch(streamError())
+        dispatch(addError(TN.CREATE_STREAM_FAILURE, "Le stream est offline"))
+      })
   }
 }
 
@@ -166,10 +170,7 @@ export function getStreamInfo(channel, getCommit = false) {
             ).then(({ content, response }) =>  {
 
         if (!response.ok || content.id == null) {
-          localStorage.removeItem('liveup_stream_id')
-          localStorage.removeItem('liveup_stream_status')
-          dispatch( receiveInfoStream() ) 
-          dispatch(addError(TN.CREATE_STREAM_FAILURE, "Une érreur s'est produite"))
+          dispatch( didLostSession() ) 
           return Promise.reject(content)
         } else {
           if (getCommit){
@@ -178,7 +179,9 @@ export function getStreamInfo(channel, getCommit = false) {
           // Dispatch the success action
           dispatch(receiveInfoStream(content))
         }
-      }).catch(err => dispatch(addError(TN.CREATE_STREAM_FAILURE, "Une érreur s'est produite")))
+      }).catch(err => {
+        dispatch( didLostSession() ) 
+      })
   }
 }
 

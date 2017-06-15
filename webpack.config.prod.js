@@ -3,7 +3,6 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
-var webpackTargetElectronRenderer = require('webpack-target-electron-renderer')
 
 
 const config = {
@@ -13,10 +12,10 @@ const config = {
   ],
 
   
-  output: {
+   output: {
     path: path.join(__dirname, './build'),
     filename: '[name]-[hash].js',
-    publicPath: path.join(__dirname, './build/')
+    publicPath: ''
   },
 
   resolve: {
@@ -24,18 +23,18 @@ const config = {
     alias: {
       'SRC': path.resolve(__dirname, 'src/'),
       'BUILD': path.resolve(__dirname, 'build/'),
-      'IMG': path.resolve(__dirname, 'src/assets/img'),
-      'FONT': path.resolve(__dirname, 'src/assets/font'),
-      'SASS': path.resolve(__dirname, 'src/dev/sass'),
-      'STORE': path.resolve(__dirname, 'src/dev/js/Store'),
-      'APP': path.resolve(__dirname, 'src/dev/js/App')
+      'IMG': path.resolve(__dirname, 'src/assets/img/'),
+      'FONT': path.resolve(__dirname, 'src/assets/font/'),
+      'SASS': path.resolve(__dirname, 'src/dev/sass/'),
+      'STORE': path.resolve(__dirname, 'src/dev/js/Store/'),
+      'APP': path.resolve(__dirname, 'src/dev/js/App/')
     },
   },
 
-  node: {
-    __dirname: false,
-    __filename: false
-  },
+  // node: {
+  //   __dirname: false,
+  //   __filename: false
+  // },
 
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -69,7 +68,7 @@ const config = {
       },
       {
         test: /\.(jpe?g|png|svg|gif)$/,
-        loader: 'file-loader?name=./img/[name]-[hash:4].[ext]',
+        loader: 'url-loader?name=./img/[name]-[hash:4].[ext]',
         include: path.join(__dirname, './src/assets/img')
       },
       {

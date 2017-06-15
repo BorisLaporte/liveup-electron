@@ -3,13 +3,15 @@
   "productName": "Liveup",
   "version": "1.0.0",
   "description": "liveup's electron",
-  "main": "src/dev/js/electron-starter.js",
+  "main": "electron-main.js",
   "scripts": {
     "build": "webpack --config webpack.config.prod.js",
     "dev": "webpack-dev-server --hot --progress --config webpack.config.dev.js",
     "electron-dev": "ELECTRON_START_URL=http://localhost:8080 electron .",
     "electron-build": "electron build/electron-main.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "build-app": "electron-packager . Liveup --platform=darwin --arch=x64 --icon=./logo_liveup.ico",
+    "build-exe": "electron-packager . Liveup --all --icon=./logo_liveup.ico"
   },
   "repository": {
     "type": "git",
@@ -53,7 +55,6 @@
     "redux-devtools": "^3.3.2",
     "sass-loader": "^6.0.0",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.9",
     "webpack-bundle-tracker": "^0.2.0",
     "webpack-dev-server": "^2.4.1"
   },
@@ -70,7 +71,6 @@
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
-    "react-bodymovin": "^1.0.4",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
